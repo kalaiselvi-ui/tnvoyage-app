@@ -189,3 +189,44 @@ export const trending = [
     slug: "hogenakkal-falls",
   },
 ];
+
+export const categoryPills = [
+  "All",
+  "Guides",
+  "Budget",
+  "Hidden Gems",
+  "Travel Tips",
+];
+
+export const blogData = [
+  {
+    id: "ooty-guide",
+    slug: "ooty-travel-guide",
+    image: assets.ooty,
+    title: "Complete Ooty Travel Guide for First-Time Visitors",
+    excerpt:
+      "Discover the best attractions, travel tips, budget estimates, and ideal seasons for exploring Ooty.",
+    category: "Travel Guide",
+    readTime: "5 min read",
+  },
+  {
+    id: "budget-trip",
+    slug: "budget-trip-under-5000",
+    image: assets.kodaikanal,
+    title: "How to Plan a Budget Trip Under ₹5000",
+    excerpt:
+      "Smart travel planning tips, affordable stays, and transport options to help you travel on a budget.",
+    category: "Budget Tips",
+    readTime: "4 min read",
+  },
+  {
+    id: "hidden-gems",
+    slug: "hidden-gems-tamil-nadu",
+    image: assets.waterfall,
+    title: "5 Hidden Gems in Tamil Nadu You Should Visit",
+    excerpt:
+      "Escape the crowds and discover lesser-known destinations packed with natural beauty and charm.",
+    category: "Hidden Gems",
+    readTime: "6 min read",
+  },
+];

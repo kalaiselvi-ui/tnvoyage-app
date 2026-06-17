@@ -11,7 +11,14 @@ import TrendingCard from "../components/TrendingCard";
 const Home = () => {
   return (
     <div>
-      <Hero />
+      <Hero
+        heroPoster={assets.heroPoster}
+        heroVideo={assets.hero_video}
+        heroTitle="Discover. Experience South India."
+        heroSubTitle="A travel platform showcasing scenic hills, waterfalls, temples, and
+          hidden gems across South India."
+        buttonText="Start Exploring"
+      />
       <section className="max-w-7xl lg:mx-auto py-5 mx-3 md:mx-8">
         <h2 className="text-center text-3xl font-bold mb-5 text-secondary">
           Featured Categories
