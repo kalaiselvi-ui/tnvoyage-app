@@ -25,7 +25,7 @@ const CategoryCard = ({
           alt={name}
           loading="lazy"
           decoding="async"
-          className="w-full aspect-4/3 object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-300"
         />
 
         {/* Overlay */}

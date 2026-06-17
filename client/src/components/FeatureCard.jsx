@@ -7,7 +7,7 @@ const FeatureCard = ({ cardImg, cardTitle, cardText, altImg }) => {
     <div className="rounded-2xl overflow-hidden shadow-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl">
       <img
         src={cardImg}
-        className="w-full aspect-4/3 object-cover"
+        className="w-full aspect-[4/3] object-cover"
         alt={altImg || "Destination Image"}
         loading="lazy"
         decoding="async"

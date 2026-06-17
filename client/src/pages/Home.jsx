@@ -60,7 +60,7 @@ const Home = () => {
           ))}
         </div>
       </section>
-      <section className="w-full py-12 px-4 md:px-10">
+      <section className="max-w-7xl lg:mx-auto py-5 mx-3 md:mx-8 pl-8">
         {/* Header */}
         <div className="flex items-end justify-between mb-6">
           <div>
