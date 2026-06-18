@@ -2,7 +2,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@plugin "@tailwindcss/typography";
 
 * {
   font-family: "Outfit", sans-serif;
@@ -10,10 +9,4 @@
 
 ::-webkit-scrollbar {
   display: none;
-}
-
-@theme {
-  --color-primary: #0ea5e9;
-  --color-secondary: #f97316;
-  --color-green: #10b981;
 }
