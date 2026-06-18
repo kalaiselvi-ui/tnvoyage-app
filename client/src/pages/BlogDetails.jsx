@@ -33,23 +33,41 @@ const BlogDetails = () => {
             />
           ))}
         </div>
-        <article className="prose prose-lg max-w-none ">
-          <h2>Why Visit Ooty?</h2>
+        <article className="max-w-3xl mx-auto px-4 py-10">
+          {/* Section 1 */}
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+            Why Visit Ooty?
+          </h2>
 
-          <p>
+          <p className="text-gray-600 leading-7 mb-6">
             Ooty is one of the most beautiful hill stations in Tamil Nadu.
             Surrounded by tea estates, misty mountains, and lakes, it attracts
             travelers throughout the year.
           </p>
 
-          <img src={assets.ooty} alt="" />
+          <img
+            src={assets.ooty}
+            alt="Ooty"
+            className="rounded-xl shadow-md w-full h-[350px] object-cover mb-10"
+          />
 
-          <h2>Top Places to Visit</h2>
+          {/* Section 2 */}
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+            Top Places to Visit
+          </h2>
 
-          <p>
+          <p className="text-gray-600 leading-7 mb-6">
             Ooty Lake, Botanical Garden, Doddabetta Peak, and Tea Museum are
             must-visit attractions.
           </p>
+
+          {/* Optional list style */}
+          <ul className="list-disc pl-6 text-gray-600 space-y-2">
+            <li>Ooty Lake – Boating and scenic views</li>
+            <li>Botanical Garden – Huge variety of plants</li>
+            <li>Doddabetta Peak – Highest viewpoint</li>
+            <li>Tea Museum – Learn tea processing</li>
+          </ul>
         </article>
         <section className="mt-20">
           <h2 className="text-3xl font-bold mb-8">Related Articles</h2>
