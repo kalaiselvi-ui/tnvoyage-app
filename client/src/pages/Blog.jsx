@@ -5,7 +5,7 @@ import PageHero from "../components/PageHero";
 import { blogs } from "../data/blogs";
 import { blogCategories } from "../data/blogCategories";
 import BlogCard from "../components/BlogCard";
-import CategoryPill from "../components/categoryPill";
+import CategoryPill from "../components/CategoryPill";
 
 const Blog = () => {
   return (
