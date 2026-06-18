@@ -2,14 +2,14 @@ import React from "react";
 import PageHero from "../components/PageHero";
 import { assets } from "../assets/assets";
 import BlogCard from "../components/BlogCard";
-import { blogData } from "../data/MockData";
+import { blogs } from "../data/blogs";
 import CardInfo from "../components/CardInfo";
 import { useParams } from "react-router-dom";
 
 const BlogDetails = () => {
   const { slug } = useParams();
 
-  const blog = blogData.find((blog) => blog.slug === slug);
+  const blog = blogs.find((blog) => blog.slug === slug);
 
   if (!blog) {
     return <div>Blog not found</div>;
@@ -29,7 +29,7 @@ const BlogDetails = () => {
             <CardInfo
               key={cardInfo.label}
               label={cardInfo.label}
-              content={cardInfo.content}
+              content={cardInfo.value}
             />
           ))}
         </div>
@@ -75,7 +75,7 @@ const BlogDetails = () => {
           <div className="grid md:grid-cols-3 gap-6">
             {
               // Related Blogs
-              blogData.map((blog) => (
+              blogs.map((blog) => (
                 <BlogCard
                   key={blog.id}
                   image={blog.image}

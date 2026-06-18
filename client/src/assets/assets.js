@@ -17,6 +17,8 @@ import food from "./food.png";
 import nature from "./nature.jpg";
 import hogenakkal from "./hogenakkal.jpg";
 import varkala from "./varkala.jpg";
+import about_banner from "./banner_about.png";
+import temple2 from "./temple_img.jpg";
 
 export const assets = {
   logo,
@@ -38,4 +40,6 @@ export const assets = {
   nature,
   hogenakkal,
   varkala,
+  about_banner,
+  temple2,
 };

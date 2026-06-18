@@ -44,14 +44,14 @@ const Navbar = () => {
               <NavLink to="/" className={activeLink}>
                 Home
               </NavLink>
+              <NavLink to="/about" className={activeLink}>
+                About
+              </NavLink>
               <NavLink to="/blogs" className={activeLink}>
                 Blogs
               </NavLink>
-              <NavLink to="/explore" className={activeLink}>
-                Explore
-              </NavLink>
-              <NavLink to="/trending" className={activeLink}>
-                Trending
+              <NavLink to="/destination" className={activeLink}>
+                Destination
               </NavLink>
               <NavLink to="/guides" className={activeLink}>
                 Guides
@@ -88,6 +88,13 @@ const Navbar = () => {
               Home
             </NavLink>
             <NavLink
+              to="/about"
+              className={activeLink}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About
+            </NavLink>
+            <NavLink
               to="/blogs"
               className={activeLink}
               onClick={() => setIsMenuOpen(false)}
@@ -95,11 +102,11 @@ const Navbar = () => {
               Blogs
             </NavLink>
             <NavLink
-              to="/explore"
+              to="/destination"
               className={activeLink}
               onClick={() => setIsMenuOpen(false)}
             >
-              Explore
+              Destination
             </NavLink>
             <NavLink
               to="/trending"

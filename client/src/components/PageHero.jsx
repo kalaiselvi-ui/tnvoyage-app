@@ -1,8 +1,8 @@
 import React from "react";
 
-const PageHero = ({ HeroImg, heroTitle, heroSubTitle }) => {
+const PageHero = ({ HeroImg, heroTitle, heroSubTitle, className }) => {
   return (
-    <div className="relative overflow-hidden w-full h-[500px]">
+    <div className={`relative overflow-hidden w-full h-[500px] ${className}`}>
       <img
         src={HeroImg}
         alt={heroTitle}

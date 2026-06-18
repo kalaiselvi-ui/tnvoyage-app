@@ -2,8 +2,10 @@ import React from "react";
 import Hero from "../components/Hero";
 import { assets } from "../assets/assets";
 import PageHero from "../components/PageHero";
-import { blogData, categoryPills } from "../data/MockData";
+import { blogs } from "../data/blogs";
+import { blogCategories } from "../data/blogCategories";
 import BlogCard from "../components/BlogCard";
+import CategoryPill from "../components/categoryPill";
 
 const Blog = () => {
   return (
@@ -16,13 +18,8 @@ const Blog = () => {
       {/* Categories */}
       <section className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-wrap gap-3 justify-center">
-          {categoryPills.map((item) => (
-            <button
-              key={item}
-              className="px-4 py-2 rounded-full border hover:bg-primary hover:text-white transition"
-            >
-              {item}
-            </button>
+          {blogCategories.map((item) => (
+            <CategoryPill key={item.id} pillText={item.name} />
           ))}
         </div>
       </section>
@@ -59,7 +56,7 @@ const Blog = () => {
         <h2 className="text-3xl font-bold mb-8">Latest Articles</h2>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {blogData.map((blog) => (
+          {blogs.map((blog) => (
             <BlogCard
               key={blog.id}
               image={blog.image}
