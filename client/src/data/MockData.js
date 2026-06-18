@@ -208,6 +208,24 @@ export const blogData = [
       "Discover the best attractions, travel tips, budget estimates, and ideal seasons for exploring Ooty.",
     category: "Travel Guide",
     readTime: "5 min read",
+    travelInfo: [
+      {
+        label: "Best Season",
+        content: "Oct - Feb",
+      },
+      {
+        label: "Budget",
+        content: "₹8000 - ₹10000",
+      },
+      {
+        label: "Duration",
+        content: "2 Days",
+      },
+      {
+        label: "Location",
+        content: "Tamil Nadu",
+      },
+    ],
   },
   {
     id: "budget-trip",
@@ -218,6 +236,24 @@ export const blogData = [
       "Smart travel planning tips, affordable stays, and transport options to help you travel on a budget.",
     category: "Budget Tips",
     readTime: "4 min read",
+    travelInfo: [
+      {
+        label: "Best Season",
+        content: "Dec - Mar",
+      },
+      {
+        label: "Budget",
+        content: "₹5000 - ₹10000",
+      },
+      {
+        label: "Duration",
+        content: "2 Days",
+      },
+      {
+        label: "Location",
+        content: "Tamil Nadu",
+      },
+    ],
   },
   {
     id: "hidden-gems",
@@ -228,5 +264,23 @@ export const blogData = [
       "Escape the crowds and discover lesser-known destinations packed with natural beauty and charm.",
     category: "Hidden Gems",
     readTime: "6 min read",
+    travelInfo: [
+      {
+        label: "Best Season",
+        content: "Jan - Apr",
+      },
+      {
+        label: "Budget",
+        content: "₹2000 - ₹6000",
+      },
+      {
+        label: "Duration",
+        content: "2 Days",
+      },
+      {
+        label: "Location",
+        content: "Tamil Nadu",
+      },
+    ],
   },
 ];

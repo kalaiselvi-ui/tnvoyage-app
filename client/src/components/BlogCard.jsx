@@ -26,7 +26,7 @@ const BlogCard = ({ image, title, excerpt, category, readTime, slug }) => {
           <span className="text-sm text-gray-500">⏱ {readTime}</span>
 
           <Link
-            to={`/blog/${slug}`}
+            to={`/blogs/${slug}`}
             className="flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
           >
             Read More

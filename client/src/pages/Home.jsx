@@ -3,7 +3,7 @@ import Hero from "../components/Hero";
 import { assets } from "../assets/assets";
 import FeatureCard from "../components/FeatureCard";
 import { categories, destinations, trending } from "../data/MockData";
-import CategoryCard from "../components/categoryCard";
+import CategoryCard from "../components/CategoryCard";
 import { FaArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import TrendingCard from "../components/TrendingCard";
