@@ -14,7 +14,7 @@ const CategoryCard = ({
 }) => {
   return (
     <Link
-      to={`/category/${slug}`}
+      to={`/destinations?category=${name}`}
       aria-label={`Explore ${name}`}
       className="group block rounded-2xl overflow-hidden shadow-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl"
     >

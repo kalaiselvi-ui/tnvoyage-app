@@ -6,19 +6,30 @@ import { blogs } from "../data/blogs";
 import { blogCategories } from "../data/blogCategories";
 import BlogCard from "../components/BlogCard";
 import CategoryPill from "../components/CategoryPill";
+import { useSearchParams } from "react-router-dom";
+import FeaturedBlog from "../components/FeaturedBlog";
 
 const Blog = () => {
-  const [filterBlogs, setFilterBlogs] = useState("All");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlCategory = searchParams.get("blogCategory") || "All";
 
-  const filterBlogList =
-    filterBlogs === "All"
+  const filterBlogList = (
+    urlCategory === "All"
       ? blogs
-      : blogs.filter((b) => b.category === filterBlogs);
-  console.log(filterBlogs);
+      : blogs.filter((b) => b.category === urlCategory)
+  ).slice(0, 8);
 
   const latestArticleList = [...blogs]
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 4);
+
+  const handleBlogCategory = (blogCategory) => {
+    if (blogCategory === "All") {
+      setSearchParams({ blogCategory: "All" });
+    } else {
+      setSearchParams({ blogCategory });
+    }
+  };
 
   return (
     <div>
@@ -31,14 +42,14 @@ const Blog = () => {
       <section className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-wrap gap-3 justify-center">
           <CategoryPill
-            onClick={() => setFilterBlogs(item.name)}
-            active={filterBlogs === "All"}
+            onClick={() => handleBlogCategory("All")}
+            active={urlCategory === "All"}
             pillText={"All"}
           />
           {blogCategories.map((item) => (
             <CategoryPill
-              onClick={() => setFilterBlogs(item.name)}
-              active={filterBlogs === item.name}
+              onClick={() => handleBlogCategory(item.name)}
+              active={urlCategory === item.name}
               key={item.id}
               pillText={item.name}
             />
@@ -69,31 +80,14 @@ const Blog = () => {
       </section>
 
       {/* Featured Blog */}
-      <section className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid md:grid-cols-2 gap-8 items-center bg-white rounded-2xl shadow-md overflow-hidden">
-          <img
-            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
-            alt="Featured blog"
-            className="w-full h-full object-cover max-h-[600px]"
-          />
-
-          <div className="p-6">
-            <span className="text-primary font-medium">Featured Guide</span>
-
-            <h2 className="text-3xl font-bold mt-3">
-              Complete Ooty Travel Guide
-            </h2>
-
-            <p className="mt-4 text-gray-600">
-              Budget, itinerary, best places to visit and travel tips.
-            </p>
-
-            <button className="mt-6 bg-primary text-white px-5 py-2 rounded-lg">
-              Read More
-            </button>
-          </div>
-        </div>
-      </section>
+      <FeaturedBlog
+        featuredImg={assets.gunaCave}
+        slug={latestArticleList[0].slug}
+        featureTitle={"Complete Ooty Travel Guide"}
+        featureDescription={
+          "Budget, itinerary, best places to visit and travel tips."
+        }
+      />
 
       {/* Latest Blogs */}
       <section className="max-w-7xl mx-auto px-4 py-12">

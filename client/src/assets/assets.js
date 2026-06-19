@@ -20,6 +20,8 @@ import varkala from "./varkala.jpg";
 import about_banner from "./banner_about.png";
 import temple2 from "./temple_img.jpg";
 import contact_img from "./contact.jpg";
+import kanyakumari_img from "./kanyakumari_statue.png";
+import gunaCave from "./gunacava.jpg";
 
 export const assets = {
   logo,
@@ -44,4 +46,6 @@ export const assets = {
   about_banner,
   temple2,
   contact_img,
+  kanyakumari_img,
+  gunaCave,
 };

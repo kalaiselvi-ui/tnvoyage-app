@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
 
-const FeatureCard = ({ cardImg, cardTitle, cardText, altImg }) => {
+const FeatureCard = ({ cardImg, cardTitle, cardText, altImg, slug }) => {
   return (
     <div className="rounded-2xl overflow-hidden shadow-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl">
       <img
@@ -23,7 +23,7 @@ const FeatureCard = ({ cardImg, cardTitle, cardText, altImg }) => {
           {cardText}
         </p>
         <Link
-          to="/explore"
+          to={`/destinations/${slug}`}
           aria-label="Explore"
           className="flex items-center justify-center gap-2 bg-secondary transition ease-in hover:bg-secondary/80 text-white py-1 px-3 rounded-lg"
         >

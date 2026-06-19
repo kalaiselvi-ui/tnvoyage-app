@@ -1,28 +1,35 @@
-import { useEffect, useState } from "react";
-import { destinations } from "../data/destinations";
-import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import PageHero from "../components/PageHero";
-import { assets } from "../assets/assets";
-import { categories } from "../data/categories";
-import DestinationCard from "../components/DestinationCard";
 import CategoryPill from "../components/CategoryPill";
+import DestinationCard from "../components/DestinationCard";
+import { assets } from "../assets/assets";
+import { destinations } from "../data/destinations";
+import { categories } from "../data/categories";
+
 const Destinations = () => {
-  const [filterCategory, setFilterCategory] = useState("All");
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // const categories = ["All", "Hills", "Temple", "Waterfall", "Nature"];
+  // 1. Read category from URL
+  const urlCategory = searchParams.get("category") || "All";
 
-  const filtered =
-    filterCategory === "All"
+  // 2. Filter destinations based on URL
+  const filteredDestinations =
+    urlCategory === "All"
       ? destinations
-      : destinations.filter(
-          (d) => d.category.toLowerCase() === filterCategory.toLowerCase(),
-        );
+      : destinations.filter((item) => item.category === urlCategory);
 
-  console.log({ filtered });
-  console.log(filterCategory);
+  // 3. Handle category click (update URL)
+  const handleCategoryChange = (category) => {
+    if (category === "All") {
+      setSearchParams({ category: "All" });
+    } else {
+      setSearchParams({ category });
+    }
+  };
 
   return (
     <div>
+      {/* HERO */}
       <PageHero
         HeroImg={assets.heroPoster}
         heroTitle="Explore Destinations"
@@ -30,45 +37,45 @@ const Destinations = () => {
       />
 
       <div className="max-w-7xl mx-auto px-4 py-10">
-        {/* Hero */}
-
-        {/* Filters */}
+        {/* CATEGORY FILTERS */}
         <div className="flex flex-wrap gap-3 justify-center mb-10">
+          {/* ALL BUTTON */}
           <CategoryPill
-            active={filterCategory === "All"}
-            onClick={() => setFilterCategory("All")}
-            pillText={"All"}
+            pillText="All"
+            active={urlCategory === "All"}
+            onClick={() => handleCategoryChange("All")}
           />
+
+          {/* OTHER CATEGORIES */}
           {categories.map((cat) => (
             <CategoryPill
               key={cat.id}
-              active={filterCategory === cat.name}
               pillText={cat.name}
-              onClick={() => setFilterCategory(cat.name)}
+              active={urlCategory === cat.name}
+              onClick={() => handleCategoryChange(cat.name)}
             />
           ))}
         </div>
 
-        {/* Grid */}
+        {/* DESTINATION GRID */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filtered.length > 0 ? (
-            filtered.map((place) => (
-              <div key={place.id.toString()}>
-                <DestinationCard
-                  place={place}
-                  image={place.image}
-                  name={place.name}
-                  category={place.category}
-                  shortDesc={place.shortDescription}
-                  slug={place.slug}
-                  location={place.location}
-                />
-              </div>
+          {filteredDestinations.length > 0 ? (
+            filteredDestinations.map((place) => (
+              <DestinationCard
+                key={place.id}
+                place={place}
+                image={place.image}
+                name={place.name}
+                category={place.category}
+                shortDesc={place.shortDescription}
+                slug={place.slug}
+                location={place.location}
+              />
             ))
           ) : (
-            <div className="w-full col-span-full text-center">
-              <p className=" text-lg text-green">No Destinations Found</p>
-            </div>
+            <p className="text-center col-span-full text-gray-500">
+              No Destinations Found
+            </p>
           )}
         </div>
       </div>

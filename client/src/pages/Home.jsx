@@ -64,6 +64,7 @@ const Home = () => {
                 altImg={destination.name}
                 cardTitle={destination.name}
                 cardText={destination.shortDescription}
+                slug={destination.slug}
               />
             </div>
           ))}
