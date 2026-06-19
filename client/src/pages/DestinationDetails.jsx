@@ -61,7 +61,7 @@ const DestinationDetails = () => {
         <section className="mt-16">
           <h2 className="text-2xl font-bold mb-6">You may also like</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {relatedDestinations.map((item) => (
               <div key={item.id}>
                 <DestinationCard
@@ -70,6 +70,7 @@ const DestinationDetails = () => {
                   name={item.name}
                   category={item.category}
                   shortDesc={item.shortDescription}
+                  location={item.location}
                   slug={item.slug}
                 />
               </div>

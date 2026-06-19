@@ -61,6 +61,7 @@ const Destinations = () => {
                   category={place.category}
                   shortDesc={place.shortDescription}
                   slug={place.slug}
+                  location={place.location}
                 />
               </div>
             ))

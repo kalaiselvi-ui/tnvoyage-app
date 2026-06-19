@@ -1,7 +1,17 @@
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
+import { SlCalender } from "react-icons/sl";
+import { CiTimer } from "react-icons/ci";
 
-const BlogCard = ({ image, title, excerpt, category, readTime, slug }) => {
+const BlogCard = ({
+  image,
+  title,
+  excerpt,
+  category,
+  readTime,
+  slug,
+  date,
+}) => {
   return (
     <article className="overflow-hidden bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
       <img
@@ -16,14 +26,27 @@ const BlogCard = ({ image, title, excerpt, category, readTime, slug }) => {
           {category}
         </span>
 
-        <h3 className="text-xl font-semibold text-gray-900 line-clamp-2 min-h-20">
+        <h3 className="text-xl font-semibold text-gray-900 line-clamp-2 min-h-10">
           {title}
         </h3>
 
         <p className="text-gray-600 line-clamp-3 min-h-[72px]">{excerpt}</p>
 
         <div className="flex items-center justify-between mt-auto">
-          <span className="text-sm text-gray-500">⏱ {readTime}</span>
+          {readTime && (
+            <span className="text-sm text-gray-500 flex items-center gap-3">
+              {" "}
+              <CiTimer />
+              {readTime}
+            </span>
+          )}
+          {date && (
+            <span className="text-sm text-gray-500 flex items-center gap-3">
+              {" "}
+              <SlCalender />
+              {date}
+            </span>
+          )}
 
           <Link
             to={`/blogs/${slug}`}

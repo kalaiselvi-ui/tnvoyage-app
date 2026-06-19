@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Hero from "../components/Hero";
 import { assets } from "../assets/assets";
 import PageHero from "../components/PageHero";
@@ -8,6 +8,18 @@ import BlogCard from "../components/BlogCard";
 import CategoryPill from "../components/CategoryPill";
 
 const Blog = () => {
+  const [filterBlogs, setFilterBlogs] = useState("All");
+
+  const filterBlogList =
+    filterBlogs === "All"
+      ? blogs
+      : blogs.filter((b) => b.category === filterBlogs);
+  console.log(filterBlogs);
+
+  const latestArticleList = [...blogs]
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 4);
+
   return (
     <div>
       <PageHero
@@ -18,9 +30,41 @@ const Blog = () => {
       {/* Categories */}
       <section className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-wrap gap-3 justify-center">
+          <CategoryPill
+            onClick={() => setFilterBlogs(item.name)}
+            active={filterBlogs === "All"}
+            pillText={"All"}
+          />
           {blogCategories.map((item) => (
-            <CategoryPill key={item.id} pillText={item.name} />
+            <CategoryPill
+              onClick={() => setFilterBlogs(item.name)}
+              active={filterBlogs === item.name}
+              key={item.id}
+              pillText={item.name}
+            />
           ))}
+        </div>
+      </section>
+      {/*Blog Cards */}
+      <section className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filterBlogList.length > 0 ? (
+            filterBlogList.map((blog) => (
+              <BlogCard
+                key={blog.id}
+                image={blog.image}
+                title={blog.title}
+                excerpt={blog.excerpt}
+                category={blog.category}
+                readTime={blog.readTime}
+                slug={blog.slug}
+              />
+            ))
+          ) : (
+            <div className="w-full col-span-full text-center">
+              <p className=" text-lg text-green">No Destinations Found</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -55,15 +99,15 @@ const Blog = () => {
       <section className="max-w-7xl mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold mb-8">Latest Articles</h2>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {blogs.map((blog) => (
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {latestArticleList.map((blog) => (
             <BlogCard
               key={blog.id}
               image={blog.image}
               title={blog.title}
               excerpt={blog.excerpt}
               category={blog.category}
-              readTime={blog.readTime}
+              date={blog.date}
               slug={blog.slug}
             />
           ))}
