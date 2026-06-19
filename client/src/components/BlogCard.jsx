@@ -18,6 +18,7 @@ const BlogCard = ({
         src={image}
         alt={title}
         loading="lazy"
+        decoding="async"
         className="w-full h-56 object-cover"
       />
 

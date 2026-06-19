@@ -15,6 +15,8 @@ const FeaturedBlog = ({
             src={featuredImg}
             alt="Featured blog"
             className="w-full h-full object-cover max-h-[600px] min-h-[500px]"
+            loading="lazy"
+            decoding="async"
           />
 
           <div className="p-6">

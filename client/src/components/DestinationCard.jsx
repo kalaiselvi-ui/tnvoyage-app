@@ -15,7 +15,13 @@ const DestinationCard = ({
   return (
     <div>
       <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition">
-        <img src={image} className="h-48 w-full object-cover" alt={name} />
+        <img
+          src={image}
+          className="h-48 w-full object-cover"
+          alt={name}
+          loading="lazy"
+          decoding="async"
+        />
 
         <div className="p-4">
           <div className="flex justify-between items-center gap-4">

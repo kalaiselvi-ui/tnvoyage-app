@@ -3,11 +3,13 @@ import { assets } from "../assets/assets";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BiMenuAltRight } from "react-icons/bi";
 import { RiCloseFill } from "react-icons/ri";
+import AuthModal from "./AuthModal";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const [scroll, setScroll] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const activeLink = ({ isActive }) =>
     isActive
@@ -58,11 +60,13 @@ const Navbar = () => {
               </NavLink>
             </div>
             <button
-              onClick={() => navigate("/admin")}
+              onClick={() => setOpen(true)}
               className="bg-secondary transition ease-in hover:bg-secondary/80  border-none cursor-pointer py-2 px-10 text-white rounded-full hidden md:block"
             >
               Login
             </button>
+            <AuthModal open={open} setOpen={setOpen} />
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -118,7 +122,7 @@ const Navbar = () => {
             </NavLink>
 
             <button
-              onClick={() => navigate("/admin")}
+              onClick={() => setOpen(true)}
               className="bg-secondary py-2 px-6 text-white rounded-full w-full"
             >
               Login

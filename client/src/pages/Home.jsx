@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Hero from "../components/Hero";
 import { assets } from "../assets/assets";
 import FeatureCard from "../components/FeatureCard";
