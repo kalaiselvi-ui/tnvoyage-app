@@ -28,7 +28,7 @@ const Hero = ({
         </p>
         {buttonText && (
           <Link
-            to="/explore"
+            to="/destinations"
             className="tracking-wider py-3 px-8 cursor-pointer transition ease-in bg-white text-black hover:bg-secondary hover:text-white"
           >
             {buttonText}

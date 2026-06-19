@@ -1,69 +1,75 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { destinations } from "../data/destinations";
 import { Link } from "react-router-dom";
-
+import PageHero from "../components/PageHero";
+import { assets } from "../assets/assets";
+import { categories } from "../data/categories";
+import DestinationCard from "../components/DestinationCard";
+import CategoryPill from "../components/CategoryPill";
 const Destinations = () => {
-  const [filter, setFilter] = useState("All");
+  const [filterCategory, setFilterCategory] = useState("All");
 
-  const categories = ["All", "Hills", "Temple", "Waterfall", "Nature"];
+  // const categories = ["All", "Hills", "Temple", "Waterfall", "Nature"];
 
   const filtered =
-    filter === "All"
+    filterCategory === "All"
       ? destinations
-      : destinations.filter((d) => d.category === filter);
+      : destinations.filter(
+          (d) => d.category.toLowerCase() === filterCategory.toLowerCase(),
+        );
+
+  console.log({ filtered });
+  console.log(filterCategory);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
-      {/* Hero */}
-      <div className="text-center mb-10">
-        <h1 className="text-4xl font-bold">Explore Destinations</h1>
-        <p className="text-gray-500 mt-2">
-          Find places by nature, culture, and adventure
-        </p>
-      </div>
+    <div>
+      <PageHero
+        HeroImg={assets.heroPoster}
+        heroTitle="Explore Destinations"
+        heroSubTitle="Find places by nature, culture, and adventure"
+      />
 
-      {/* Filters */}
-      <div className="flex flex-wrap gap-3 justify-center mb-10">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setFilter(cat)}
-            className={`px-4 py-2 rounded-full border ${
-              filter === cat ? "bg-black text-white" : "bg-white text-gray-600"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+      <div className="max-w-7xl mx-auto px-4 py-10">
+        {/* Hero */}
 
-      {/* Grid */}
-      <div className="grid md:grid-cols-3 gap-6">
-        {filtered.map((place) => (
-          <Link
-            to={`/destinations/${place.slug}`}
-            key={place.id}
-            className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition"
-          >
-            <img
-              src={place.image}
-              className="h-48 w-full object-cover"
-              alt={place.name}
+        {/* Filters */}
+        <div className="flex flex-wrap gap-3 justify-center mb-10">
+          <CategoryPill
+            active={filterCategory === "All"}
+            onClick={() => setFilterCategory("All")}
+            pillText={"All"}
+          />
+          {categories.map((cat) => (
+            <CategoryPill
+              key={cat.id}
+              active={filterCategory === cat.name}
+              pillText={cat.name}
+              onClick={() => setFilterCategory(cat.name)}
             />
+          ))}
+        </div>
 
-            <div className="p-4">
-              <span className="text-xs bg-gray-100 px-2 py-1 rounded">
-                {place.category}
-              </span>
-
-              <h2 className="text-xl font-semibold mt-2">{place.name}</h2>
-
-              <p className="text-gray-500 text-sm mt-1">{place.shortDesc}</p>
-
-              <p className="text-blue-600 mt-3 text-sm">View Details →</p>
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filtered.length > 0 ? (
+            filtered.map((place) => (
+              <div key={place.id.toString()}>
+                <DestinationCard
+                  place={place}
+                  image={place.image}
+                  name={place.name}
+                  category={place.category}
+                  shortDesc={place.shortDescription}
+                  slug={place.slug}
+                />
+              </div>
+            ))
+          ) : (
+            <div className="w-full col-span-full text-center">
+              <p className=" text-lg text-green">No Destinations Found</p>
             </div>
-          </Link>
-        ))}
+          )}
+        </div>
       </div>
     </div>
   );
