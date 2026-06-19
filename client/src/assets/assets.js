@@ -19,6 +19,7 @@ import hogenakkal from "./hogenakkal.jpg";
 import varkala from "./varkala.jpg";
 import about_banner from "./banner_about.png";
 import temple2 from "./temple_img.jpg";
+import contact_img from "./contact.jpg";
 
 export const assets = {
   logo,
@@ -42,4 +43,5 @@ export const assets = {
   varkala,
   about_banner,
   temple2,
+  contact_img,
 };

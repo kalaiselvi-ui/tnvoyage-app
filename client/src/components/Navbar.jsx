@@ -53,8 +53,8 @@ const Navbar = () => {
               <NavLink to="/destinations" className={activeLink}>
                 Destination
               </NavLink>
-              <NavLink to="/guides" className={activeLink}>
-                Guides
+              <NavLink to="/contact" className={activeLink}>
+                Contact
               </NavLink>
             </div>
             <button
@@ -108,19 +108,13 @@ const Navbar = () => {
             >
               Destination
             </NavLink>
+
             <NavLink
-              to="/trending"
+              to="/contact"
               className={activeLink}
               onClick={() => setIsMenuOpen(false)}
             >
-              Trending
-            </NavLink>
-            <NavLink
-              to="/guides"
-              className={activeLink}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Guides
+              Contact
             </NavLink>
 
             <button

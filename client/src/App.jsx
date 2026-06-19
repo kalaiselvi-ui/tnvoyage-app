@@ -7,6 +7,7 @@ import BlogDetails from "./pages/BlogDetails";
 import Destinations from "./pages/Destinations";
 import DestinationDetails from "./pages/DestinationDetails";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/blogs/:slug" element={<BlogDetails />} />
         <Route path="/destinations" element={<Destinations />} />
         <Route path="/destinations/:slug" element={<DestinationDetails />} />
+        <Route path="/contact" element={<Contact />} />
       </Route>
     </Routes>
   );
