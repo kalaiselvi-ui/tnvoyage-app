@@ -8,6 +8,7 @@ export const categories = [
     slug: "hill-stations",
     image: assets.hills,
     description: "Cool escapes & mountain views",
+    placeCount: "8",
   },
   {
     id: "waterfalls",
@@ -16,6 +17,7 @@ export const categories = [
     slug: "waterfalls",
     image: assets.waterfall,
     description: "Hidden cascades & scenic drops",
+    placeCount: "10",
   },
   {
     id: "temples",
@@ -24,6 +26,7 @@ export const categories = [
     slug: "temples",
     image: assets.temple,
     description: "Spiritual & heritage sites",
+    placeCount: "10",
   },
   {
     id: "beaches",
@@ -32,6 +35,7 @@ export const categories = [
     slug: "beaches",
     image: assets.beach,
     description: "Sun, sand & coastal vibes",
+    placeCount: "3",
   },
   {
     id: "nature",
@@ -40,6 +44,7 @@ export const categories = [
     slug: "nature",
     image: assets.nature,
     description: "Forests & wildlife",
+    placeCount: "5",
   },
   {
     id: "food-trails",
@@ -48,5 +53,6 @@ export const categories = [
     slug: "food-trails",
     image: assets.food,
     description: "Local food experiences",
+    placeCount: "2",
   },
 ];

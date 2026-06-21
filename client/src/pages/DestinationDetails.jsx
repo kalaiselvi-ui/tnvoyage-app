@@ -34,7 +34,7 @@ const DestinationDetails = () => {
         heroTitle={place.name}
         heroSubTitle={place.category}
       />
-      <div className="max-w-5xl mx-auto px-4 py-10">
+      <div className="max-w-7xl mx-auto px-4 py-10">
         {/* Info Cards */}
         <div className="grid md:grid-cols-3 gap-4 mt-8">
           <CardInfo label="Best Time" content={place.bestTime} />

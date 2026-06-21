@@ -4,12 +4,14 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BiMenuAltRight } from "react-icons/bi";
 import { RiCloseFill } from "react-icons/ri";
 import AuthModal from "./AuthModal";
+import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const [scroll, setScroll] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   const activeLink = ({ isActive }) =>
     isActive
@@ -27,6 +29,10 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleLogout = () => {
+    setIsLogin(false);
+  };
 
   return (
     <div>
@@ -59,12 +65,37 @@ const Navbar = () => {
                 Contact
               </NavLink>
             </div>
-            <button
-              onClick={() => setOpen(true)}
-              className="bg-secondary transition ease-in hover:bg-secondary/80  border-none cursor-pointer py-2 px-10 text-white rounded-full hidden md:block"
-            >
-              Login
-            </button>
+
+            {isLogin ? (
+              <div className="relative hidden md:block group">
+                <div className="flex items-center gap-2 text-white">
+                  <FaUser />
+                  Admin
+                </div>
+
+                <div className="absolute right-0 mt-2 w-40 p-4 bg-black/60 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                  <Link
+                    to="/admin-dashboard"
+                    className="flex items-center gap-2 text-white hover:text-secondary"
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="hover:text-secondary text-white text-left"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                onClick={() => setOpen(true)}
+                className="bg-secondary transition ease-in hover:bg-secondary/80  border-none cursor-pointer py-2 px-10 text-white rounded-full hidden md:block"
+              >
+                Login
+              </button>
+            )}
             <AuthModal open={open} setOpen={setOpen} />
 
             {/* Mobile Menu Button */}
@@ -121,12 +152,30 @@ const Navbar = () => {
               Contact
             </NavLink>
 
-            <button
-              onClick={() => setOpen(true)}
-              className="bg-secondary py-2 px-6 text-white rounded-full w-full"
-            >
-              Login
-            </button>
+            {isLogin ? (
+              <>
+                <Link
+                  className="flex gap-2 items-center"
+                  to="/admin-dashboard"
+                  aria-label="User-icon"
+                >
+                  <FaUser /> Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-left text-red-500"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => setOpen(true)}
+                className="bg-secondary py-2 px-6 text-white rounded-full w-full"
+              >
+                Login
+              </button>
+            )}
           </div>
         )}
       </nav>

@@ -8,6 +8,17 @@ import Destinations from "./pages/Destinations";
 import DestinationDetails from "./pages/DestinationDetails";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminBlogs from "./pages/Admin/Blog/AdminBlogs";
+import AdminCategory from "./pages/Admin/Category/AdminCategory";
+import AdminDestination from "./pages/Admin/Destination/AdminDestination";
+import AdminLayout from "./pages/Admin/AdminLayout";
+import CreateBlog from "./pages/Admin/Blog/CreateBlog";
+import CreateCategory from "./pages/Admin/Category/CreateCategory";
+import EditBlog from "./pages/Admin/Blog/EditBlog";
+import EditDestination from "./pages/Admin/Destination/EditDestination";
+import CreateDestination from "./pages/Admin/Destination/CreateDestination";
+import EditCategory from "./pages/Admin/Category/EditCategory";
 
 const App = () => {
   return (
@@ -20,6 +31,26 @@ const App = () => {
         <Route path="/destinations" element={<Destinations />} />
         <Route path="/destinations/:slug" element={<DestinationDetails />} />
         <Route path="/contact" element={<Contact />} />
+      </Route>
+      {/* Admin Routes */}
+      <Route path="/admin-dashboard" element={<AdminLayout />}>
+        <Route index element={<AdminDashboard />} />
+        <Route path="blogs" element={<AdminBlogs />} />
+        <Route path="blogs/create-blog" element={<CreateBlog />} />
+        <Route path="blogs/edit-blog/:id" element={<EditBlog />} />
+        <Route path="categories" element={<AdminCategory />} />
+        <Route path="categories/create-category" element={<CreateCategory />} />
+        <Route path="categories/edit-category/:id" element={<EditCategory />} />
+
+        <Route path="destinations" element={<AdminDestination />} />
+        <Route
+          path="destinations/create-destination"
+          element={<CreateDestination />}
+        />
+        <Route
+          path="destinations/edit-destination/:id"
+          element={<EditDestination />}
+        />
       </Route>
     </Routes>
   );
