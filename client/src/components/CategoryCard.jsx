@@ -8,7 +8,6 @@ const CategoryCard = ({
   emoji,
   description,
   image,
-  slug,
   placeCount,
   color,
 }) => {

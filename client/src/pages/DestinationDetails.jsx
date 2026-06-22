@@ -10,7 +10,6 @@ const DestinationDetails = () => {
   const { slug } = useParams();
 
   const place = destinations.find((d) => d.slug === slug);
-  console.log(place);
 
   if (!place) {
     return (

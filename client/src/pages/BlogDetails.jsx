@@ -9,12 +9,15 @@ import { useParams } from "react-router-dom";
 const BlogDetails = () => {
   const { slug } = useParams();
 
-  const blog = blogs.find((blog) => blog.slug === slug);
-
+  const blog = blogs.find((b) => b.slug === slug);
+  console.log(blog);
   if (!blog) {
     return <div>Blog not found</div>;
   }
-  console.log(blog.travelInfo);
+  const relatedBlogs = blogs
+    .filter((b) => b.category == blog.category && blog.category !== blog)
+    .slice(0, 3);
+  console.log(relatedBlogs);
   return (
     <div className="">
       <PageHero
@@ -75,7 +78,7 @@ const BlogDetails = () => {
           <div className="grid md:grid-cols-3 gap-6">
             {
               // Related Blogs
-              blogs.map((blog) => (
+              relatedBlogs?.map((blog) => (
                 <BlogCard
                   key={blog.id}
                   image={blog.image}
