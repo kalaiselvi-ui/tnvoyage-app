@@ -12,21 +12,41 @@ const blogSchema = new mongoose.Schema(
       unique: true,
     },
 
-    category: {
+    blogCategory: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "BlogCategory",
+      enum: ["Travel Guide", "Food", "Adventure", "Budget Tips", "Hidden Gem"],
     },
 
     image: String,
 
-    excerpt: String,
+    shortDesc: String,
 
-    content: String,
-
+    description: String,
+    readTime: {
+      type: String,
+      default: "3 mins",
+    },
     author: {
       type: String,
-      default: "Admin",
+      default: "admin",
     },
+    travelInfo: [
+      {
+        type: {
+          type: String,
+          required: true,
+        },
+        label: {
+          type: String,
+          required: true,
+        },
+        value: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+    places: [String],
 
     featured: {
       type: Boolean,
@@ -36,7 +56,7 @@ const blogSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-blogSchema.pre("save", async function (next) {
+blogSchema.pre("save", async function () {
   if (this.isModified("title")) {
     let baseSlug = slugify(this.title, { lower: true, strict: true });
     let slugExists = await mongoose.models.Blog.findOne({

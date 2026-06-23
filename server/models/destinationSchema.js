@@ -27,6 +27,7 @@ const destinationSchema = new mongoose.Schema(
     bestTime: String,
 
     budget: String,
+    location: String,
 
     featured: {
       type: Boolean,
@@ -36,7 +37,7 @@ const destinationSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-destinationSchema.pre("save", async function (next) {
+destinationSchema.pre("save", async function () {
   if (this.isModified("name")) {
     let baseSlug = slugify(this.name, { lower: true, strict: true });
     let slugExists = await mongoose.models.Destination.findOne({
@@ -47,7 +48,6 @@ destinationSchema.pre("save", async function (next) {
     }
     this.slug = baseSlug;
   }
-  next();
 });
 
 const Destination = mongoose.model("Destination", destinationSchema);

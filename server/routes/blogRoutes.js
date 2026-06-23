@@ -4,33 +4,33 @@ import { isAdmin } from "../controllers/userController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 import upload from "../config/multer.js";
 import {
-  editCategory,
-  createCategory,
-  deleteCategory,
-  getAllCategory,
-} from "../controllers/categoryController.js";
+  createBlog,
+  deleteBlog,
+  editBlog,
+  getAllBlog,
+} from "../controllers/blogController.js";
 
-const categoryRouter = express.Router();
+const blogRoutes = express.Router();
 
 // 2. Add upload.single("image") directly into the route sequence
-categoryRouter.post(
+blogRoutes.post(
   "/create",
   authMiddleware,
   isAdmin,
   upload.single("image"),
-  createCategory,
+  createBlog,
 );
 
-categoryRouter.put(
+blogRoutes.put(
   "/edit/:id",
   authMiddleware,
   isAdmin,
   upload.single("image"),
-  editCategory,
+  editBlog,
 );
 
-categoryRouter.get("/", getAllCategory);
+blogRoutes.get("/", getAllBlog);
 
-categoryRouter.delete("/delete/:id", authMiddleware, isAdmin, deleteCategory);
+blogRoutes.delete("/delete/:id", authMiddleware, isAdmin, deleteBlog);
 
-export default categoryRouter;
+export default blogRoutes;
