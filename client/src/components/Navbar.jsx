@@ -5,13 +5,15 @@ import { BiMenuAltRight } from "react-icons/bi";
 import { RiCloseFill } from "react-icons/ri";
 import AuthModal from "./AuthModal";
 import { FaUser } from "react-icons/fa";
+import { useAuth } from "../context/AuthContext.jsx";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const [scroll, setScroll] = useState(false);
   const [open, setOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
+  // const [isLogin, setIsLogin] = useState(true);
+  const { logoutUser, user, isAuthenticated } = useAuth();
 
   const activeLink = ({ isActive }) =>
     isActive
@@ -29,10 +31,6 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  const handleLogout = () => {
-    setIsLogin(false);
-  };
 
   return (
     <div>
@@ -66,11 +64,11 @@ const Navbar = () => {
               </NavLink>
             </div>
 
-            {isLogin ? (
+            {isAuthenticated ? (
               <div className="relative hidden md:block group">
                 <div className="flex items-center gap-2 text-white">
                   <FaUser />
-                  Admin
+                  {user?.name || "User"}
                 </div>
 
                 <div className="absolute right-0 mt-2 w-40 p-4 bg-black/60 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
@@ -78,10 +76,11 @@ const Navbar = () => {
                     to="/admin-dashboard"
                     className="flex items-center gap-2 text-white hover:text-secondary"
                   >
-                    Dashboard
+                    Admin Dashboard
                   </Link>
+
                   <button
-                    onClick={handleLogout}
+                    onClick={logoutUser}
                     className="hover:text-secondary text-white text-left"
                   >
                     Logout
@@ -152,19 +151,17 @@ const Navbar = () => {
               Contact
             </NavLink>
 
-            {isLogin ? (
+            {isAuthenticated ? (
               <>
                 <Link
                   className="flex gap-2 items-center"
                   to="/admin-dashboard"
                   aria-label="User-icon"
                 >
-                  <FaUser /> Dashboard
+                  <FaUser />
+                  Dashboard
                 </Link>
-                <button
-                  onClick={handleLogout}
-                  className="text-left text-red-500"
-                >
+                <button onClick={logoutUser} className="text-left text-red-500">
                   Logout
                 </button>
               </>

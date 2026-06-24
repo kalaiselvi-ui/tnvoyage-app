@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import Hero from "../components/Hero";
 import { assets } from "../assets/assets";
 import PageHero from "../components/PageHero";
-import { blogs } from "../data/blogs";
+// import { blogs } from "../data/blogs";
 import { blogCategories } from "../data/blogCategories";
 import BlogCard from "../components/BlogCard";
 import CategoryPill from "../components/CategoryPill";
 import { useSearchParams } from "react-router-dom";
 import FeaturedBlog from "../components/FeaturedBlog";
+import { useBlog } from "../context/BlogContext.jsx";
 
 const Blog = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const urlCategory = searchParams.get("blogCategory") || "All";
+  const { blogs, getAllBlogs, loading: blogLoading } = useBlog();
 
   const filterBlogList = (
     urlCategory === "All"
@@ -82,7 +84,7 @@ const Blog = () => {
       {/* Featured Blog */}
       <FeaturedBlog
         featuredImg={assets.gunaCave}
-        slug={latestArticleList[0].slug}
+        slug={latestArticleList[0]}
         featureTitle={"Complete Ooty Travel Guide"}
         featureDescription={
           "Budget, itinerary, best places to visit and travel tips."

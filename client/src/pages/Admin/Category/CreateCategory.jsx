@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import CategoryForm from "../../../components/CategoryForm";
 import { useNavigate } from "react-router-dom";
 
 const CreateCategory = () => {
   const navigate = useNavigate();
+
   const handleSubmit = (data) => {
     const existingCategory = JSON.parse(
       localStorage.getItem("mock_category") || "[]",

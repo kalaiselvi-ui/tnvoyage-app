@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { categories } from "../../../data/categories";
 import { MdDelete, MdEdit } from "react-icons/md";
+import axios from "axios";
 
 const AdminCategory = () => {
   const navigate = useNavigate();

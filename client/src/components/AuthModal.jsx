@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
+import { useAuth } from "../context/AuthContext.jsx";
 
 const AuthModal = ({ open, setOpen }) => {
-  // const [open, setOpen] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
+  const { registerUser, loginUser, isAuthenticated, user } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -33,11 +34,27 @@ const AuthModal = ({ open, setOpen }) => {
       [name]: value,
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    e.stopPropagation();
-    console.log(formData);
-    setOpen(false);
+    try {
+      let res;
+      if (isLogin) {
+        res = await loginUser(formData);
+      } else {
+        res = await registerUser(formData);
+      }
+      if (res) {
+        setOpen(false);
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+        });
+      }
+      console.log(formData);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

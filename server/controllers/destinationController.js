@@ -42,13 +42,13 @@ const createDestination = async (req, res) => {
 
 const getAllDestination = async (req, res) => {
   try {
-    const destination = await Destination.find();
+    const destination = await Destination.find().populate("category", "name");
     if (!destination)
       return res.status(404).json({
         success: false,
         message: "Destination Not Found",
       });
-    return res.status(200).json({ success: true, data: destination });
+    return res.status(200).json({ success: true, destination });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: err.message });
@@ -119,7 +119,7 @@ const deleteDestination = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Destination deleted successfully",
-      data: destination,
+      destination,
     });
   } catch (err) {
     console.error(err);

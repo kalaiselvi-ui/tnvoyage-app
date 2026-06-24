@@ -19,6 +19,7 @@ import EditBlog from "./pages/Admin/Blog/EditBlog";
 import EditDestination from "./pages/Admin/Destination/EditDestination";
 import CreateDestination from "./pages/Admin/Destination/CreateDestination";
 import EditCategory from "./pages/Admin/Category/EditCategory";
+import ProtectedRoutes from "./routes/ProtectedRoutes.jsx";
 
 const App = () => {
   return (
@@ -33,7 +34,14 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
       </Route>
       {/* Admin Routes */}
-      <Route path="/admin-dashboard" element={<AdminLayout />}>
+      <Route
+        path="/admin-dashboard"
+        element={
+          <ProtectedRoutes>
+            <AdminLayout />
+          </ProtectedRoutes>
+        }
+      >
         <Route index element={<AdminDashboard />} />
         <Route path="blogs" element={<AdminBlogs />} />
         <Route path="blogs/create-blog" element={<CreateBlog />} />

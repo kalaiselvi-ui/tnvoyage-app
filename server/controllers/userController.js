@@ -70,7 +70,7 @@ const login = async (req, res) => {
 
     return res.status(200).json({
       message: "User login Successful",
-      loginUser: userResponse,
+      user: userResponse,
       token,
     });
   } catch (err) {
@@ -81,6 +81,18 @@ const login = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  try {
+    console.log("logout");
+    return res
+      .status(200)
+      .json({ success: true, message: "User Logout Successfully" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
 const isAdmin = (req, res, next) => {
   if (req.user.role.toLowerCase() !== "admin") {
     return res.status(403).json({ message: "Access denied" });
@@ -88,4 +100,4 @@ const isAdmin = (req, res, next) => {
   next();
 };
 
-export { register, isAdmin, login };
+export { register, isAdmin, login, logout };

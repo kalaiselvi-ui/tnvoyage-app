@@ -1,16 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Hero from "../components/Hero";
 import { assets } from "../assets/assets";
 import FeatureCard from "../components/FeatureCard";
 import { categories } from "../data/categories";
-import { destinations } from "../data/destinations";
+// import { destinations } from "../data/destinations";
 import { trending } from "../data/trending";
 import CategoryCard from "../components/CategoryCard";
 import { FaArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import TrendingCard from "../components/TrendingCard";
+import API from "../api/axiosInstance.js";
+import { useCategory } from "../context/categoryContext.jsx";
+import SkeletonCard from "../components/SkeletonCard.jsx";
+import { useDestination } from "../context/DestinationContext.jsx";
 
 const Home = () => {
+  const { categories, getCategories, loading: categoryLoading } = useCategory();
+  const {
+    destinations,
+    getAllDestination,
+    loading: destinationLoading,
+  } = useDestination();
+
+  useEffect(() => {
+    getCategories();
+    getAllDestination();
+  }, []);
+
+  const countMap = categories.reduce((acc, cat) => {
+    acc[cat.name] = (acc[cat.name] || 0) + 1;
+    return acc;
+  }, {});
+
   return (
     <div>
       <Hero
@@ -26,26 +47,38 @@ const Home = () => {
           Featured Categories
         </h2>
         <div className="flex flex-wrap justify-center gap-4 px-8">
-          {
-            // Categories
-            categories.map((category) => (
-              <div
-                className="xl:w-[calc(25%-1rem)] max-w-sm sm:w-[calc(33%-1rem)] w-full"
-                key={category.id}
-              >
-                <CategoryCard
-                  id={category.id}
-                  name={category.name}
-                  emoji={category.emoji}
-                  description={category.description}
-                  image={category.image}
-                  slug={category.slug}
-                  placeCount={category.placeCount}
-                  color={category.color}
-                />
-              </div>
-            ))
-          }
+          {categoryLoading
+            ? Array.from({ length: 8 }).map((_, index) => {
+                return (
+                  <div className="xl:w-[calc(25%-1rem)] max-w-sm sm:w-[calc(33%-1rem)] w-full">
+                    <SkeletonCard key={`skeleton-${index}`} />
+                  </div>
+                );
+              })
+            : // Categories
+              categories.map((category, index) => {
+                // const placeCount = categories.filter(
+                //   (cat) => cat.name === category.name,
+                // ).length;
+                const placeCount = countMap[category.name] || 0;
+                return (
+                  <div
+                    className="xl:w-[calc(25%-1rem)] max-w-sm sm:w-[calc(33%-1rem)] w-full"
+                    key={category._id}
+                  >
+                    <CategoryCard
+                      id={category._id}
+                      name={category.name}
+                      emoji={category.emoji}
+                      description={category.description}
+                      image={category.image}
+                      slug={category.slug}
+                      placeCount={placeCount}
+                      color={category.color}
+                    />
+                  </div>
+                );
+              })}
         </div>
       </section>
       <section className="max-w-7xl lg:mx-auto py-10 mx-3 md:mx-8">
@@ -54,20 +87,28 @@ const Home = () => {
         </h2>
         <div className="flex flex-wrap justify-center gap-4 px-8">
           {/* Feature Cards */}
-          {destinations.map((destination) => (
-            <div
-              key={destination.id}
-              className="w-full md:w-[calc(25%-1rem)] max-w-sm"
-            >
-              <FeatureCard
-                cardImg={destination.image}
-                altImg={destination.name}
-                cardTitle={destination.name}
-                cardText={destination.shortDescription}
-                slug={destination.slug}
-              />
-            </div>
-          ))}
+          {destinationLoading
+            ? Array.from({ length: 8 }).map((_, index) => {
+                return (
+                  <div className="xl:w-[calc(25%-1rem)] max-w-sm sm:w-[calc(33%-1rem)] w-full">
+                    <SkeletonCard key={`skeleton-${index}`} />
+                  </div>
+                );
+              })
+            : destinations.map((destination) => (
+                <div
+                  key={destination.id}
+                  className="w-full md:w-[calc(25%-1rem)] max-w-sm"
+                >
+                  <FeatureCard
+                    cardImg={destination.image}
+                    altImg={destination.name}
+                    cardTitle={destination.name}
+                    cardText={destination.description}
+                    slug={destination.slug}
+                  />
+                </div>
+              ))}
         </div>
       </section>
       <section className="max-w-7xl lg:mx-auto py-5 mx-3 md:mx-8 pl-8">
