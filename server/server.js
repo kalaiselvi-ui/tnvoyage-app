@@ -8,14 +8,24 @@ import userRouter from "./routes/userRoutes.js";
 import categoryRouter from "./routes/categoryRoutes.js";
 import destinationRoutes from "./routes/destinationRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "https://tnvoyage-app.vercel.app",
+    ],
+    credentials: true,
+  }),
+);
 // app.use(bodyParser.json({ limit: "10mb" }));
-app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(express.json());
-app.use(cors());
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 connectDB();
 
