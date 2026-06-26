@@ -16,7 +16,7 @@ export const CategoryProvider = ({ children }) => {
 
       // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-      const res = await API.get("/category");
+      const res = await API.get("/api/category");
       dispatch({
         type: "FETCH_SUCCESS",
         payload: res.data.data,
@@ -32,7 +32,7 @@ export const CategoryProvider = ({ children }) => {
   //CREATE category
   const addCategory = async (formData) => {
     try {
-      const res = await API.post("/category/create", formData, {
+      const res = await API.post("/api/category/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -50,7 +50,7 @@ export const CategoryProvider = ({ children }) => {
   //UPDATE category
   const editCategory = async (id, formData) => {
     try {
-      const res = await API.put(`/category/edit/${id}`, formData, {
+      const res = await API.put(`/api/category/edit/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -68,7 +68,7 @@ export const CategoryProvider = ({ children }) => {
   //DELETE Category
   const deleteCategory = async (id) => {
     try {
-      const res = await API.delete(`/category/delete/${id}`);
+      const res = await API.delete(`/api/category/delete/${id}`);
       dispatch({
         type: "DELETE_CATEGORY",
         payload: id,

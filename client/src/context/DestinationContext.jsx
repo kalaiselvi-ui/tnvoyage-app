@@ -16,7 +16,7 @@ export const DestinationProvider = ({ children }) => {
       dispatch({
         type: "FETCH_START",
       });
-      const res = await API.get(`/destination`);
+      const res = await API.get(`/api/destination`);
       dispatch({
         type: "FETCH_SUCCESS",
         payload: res.data.destination,
@@ -31,7 +31,7 @@ export const DestinationProvider = ({ children }) => {
   //create destination
   const addDestination = async (formData) => {
     try {
-      const res = await API.post(`/destination/create`, formData, {
+      const res = await API.post(`/api/destination/create`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -48,7 +48,7 @@ export const DestinationProvider = ({ children }) => {
   };
   const editDestination = async (id, formData) => {
     try {
-      const res = await API.put(`/destination/edit/${id}`, formData, {
+      const res = await API.put(`/api/destination/edit/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -65,7 +65,7 @@ export const DestinationProvider = ({ children }) => {
   };
   const deleteDestination = async (id) => {
     try {
-      const res = await API.delete(`/destination/delete/${id}`);
+      const res = await API.delete(`/api/destination/delete/${id}`);
       dispatch({
         type: "DELETE_DESTINATION",
         payload: id,

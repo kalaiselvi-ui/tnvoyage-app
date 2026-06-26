@@ -10,7 +10,7 @@ export const AuthContextProvider = ({ children }) => {
   //register
   const registerUser = async (formData) => {
     try {
-      const response = await API.post("/user/register", formData);
+      const response = await API.post("/api/user/register", formData);
 
       dispatch({
         type: "REGISTER",
@@ -28,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
   //login
   const loginUser = async (formData) => {
     try {
-      const response = await API.post("/user/login", formData);
+      const response = await API.post("/api/user/login", formData);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       dispatch({
@@ -50,7 +50,7 @@ export const AuthContextProvider = ({ children }) => {
   //logout
   const logoutUser = async () => {
     try {
-      const response = await API.post("/user/logout");
+      const response = await API.post("/api/user/logout");
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       dispatch({

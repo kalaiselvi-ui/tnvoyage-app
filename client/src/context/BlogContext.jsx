@@ -13,7 +13,7 @@ export const BlogProvider = ({ children }) => {
       dispatch({
         type: "FETCH_START",
       });
-      const res = await API.get("/blog");
+      const res = await API.get("/api/blog");
       dispatch({
         type: "FETCH_SUCCESS",
         payload: res.data.data,
@@ -28,7 +28,7 @@ export const BlogProvider = ({ children }) => {
   //add blog
   const addBlog = async (formData) => {
     try {
-      const res = await API.post("/blog/create", formData, {
+      const res = await API.post("/api/blog/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -46,7 +46,7 @@ export const BlogProvider = ({ children }) => {
   //edit blog
   const editBlog = async (id, formData) => {
     try {
-      const res = await API.put(`/blog/edit/${id}`, formData, {
+      const res = await API.put(`/api/blog/edit/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -64,7 +64,7 @@ export const BlogProvider = ({ children }) => {
   //delete blog
   const deleteBlog = async (id) => {
     try {
-      const res = await API.delete(`/blog/delete/${id}`);
+      const res = await API.delete(`/api/blog/delete/${id}`);
       dispatch({
         type: "DELETE_BLOG",
         payload: id,
