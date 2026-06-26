@@ -27,7 +27,9 @@ export const categoryReducer = (state, action) => {
     case "ADD_CATEGORY":
       return {
         ...state,
-        categories: [...state.categories, action.payload],
+        categories: action.payload
+          ? [...state.categories, action.payload]
+          : state.categories,
       };
     case "UPDATE_CATEGORY":
       return {

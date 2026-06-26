@@ -1,17 +1,36 @@
-import { useState } from "react";
-import { blogCategories } from "../data/blogCategories";
-import { categories } from "../data/categories";
+import { useEffect, useState } from "react";
+import { useCategory } from "../context/CategoryContext.jsx";
 
-const BlogForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
+const CategoryForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
+  const [imagePreview, setImagePreview] = useState(null);
+  const { categories } = useCategory();
+
   const [form, setForm] = useState({
-    id: initialData.id || "",
-    slug: initialData.slug || "",
-    categoryName: initialData.categoryName || "",
-    description: initialData.description || "",
-    placeCount: initialData.placeCount || "",
+    name: "",
+    slug: "",
+    description: "",
     image: "",
   });
 
+  // populate form when editing
+  useEffect(() => {
+    if (!initialData) return;
+
+    const data = initialData.category || initialData; // 👈 IMPORTANT FIX
+
+    setForm({
+      name: data.name || "",
+      slug: data.slug || "",
+      description: data.description || "",
+      image: "",
+    });
+
+    if (data.image) {
+      setImagePreview(data.image);
+    }
+  }, [initialData?.id, initialData?.name]);
+
+  // handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -20,42 +39,48 @@ const BlogForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
         ...prev,
         [name]: value,
       };
-      //generate slug only if category changes
 
-      if (name === "categoryName") {
-        const selectedCategory = categories.find(
-          (cat) => String(cat.id) === value,
-        );
-        updated.slug = selectedCategory?.slug || "";
+      // generate slug when category changes
+      if (name === "name") {
+        updated.slug = value.toLowerCase().trim().replace(/\s+/g, "-");
       }
 
       return updated;
     });
   };
+
+  // image change
   const handleImage = (e) => {
-    setForm({
-      ...form,
-      image: e.target.files[0],
-    });
+    const file = e.target.files[0];
+
+    setForm((prev) => ({
+      ...prev,
+      image: file,
+    }));
+
+    setImagePreview(URL.createObjectURL(file));
   };
 
+  // submit
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!form.categoryName) {
-      alert("Please fill out the Category!");
+    if (!form.name) {
+      alert("Please select a category");
       return;
     }
-    // This passes the data up to <CreateBlog />
+
     onSubmit(form);
 
-    setForm({
-      categoryName: "",
-      description: "",
-      placeCount: "",
-      slug: "",
-      image: "",
-    });
+    if (!isEdit) {
+      setForm({
+        name: "",
+        slug: "",
+        description: "",
+        image: "",
+      });
+      setImagePreview(null);
+    }
   };
 
   return (
@@ -63,29 +88,27 @@ const BlogForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
       onSubmit={handleSubmit}
       className="bg-white p-6 rounded-xl shadow space-y-4"
     >
-      <select
-        name="categoryName"
-        value={form.categoryName}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-      >
-        <option value="">Select Category</option>
-
-        {categories.map((cat) => (
-          <option key={cat.id} value={cat.id}>
-            {cat.name}
-          </option>
-        ))}
-      </select>
-
+      {/* CATEGORY Name */}
       <input
-        name="slug"
-        placeholder="Slug"
-        readOnly
-        value={form.slug}
+        name="name"
+        type="text"
+        placeholder="Category Name"
+        value={form.name}
+        onChange={handleChange}
         className="w-full border p-2 rounded"
       />
 
+      {/* SLUG */}
+      <input
+        name="slug"
+        readOnly
+        placeholder="Slug"
+        value={form.slug}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
+      />
+
+      {/* DESCRIPTION */}
       <textarea
         name="description"
         placeholder="Description"
@@ -94,23 +117,24 @@ const BlogForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
         className="w-full border p-2 rounded"
       />
 
-      <input
-        name="placeCount"
-        placeholder="placeCount total"
-        value={form.placeCount}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-      />
-      <input type="file" accept="image/*" onChange={handleImage} />
+      {/* IMAGE */}
+      <div className="flex items-center gap-4">
+        <input type="file" accept="image/*" onChange={handleImage} />
 
-      <button
-        type="submit"
-        className="bg-secondary text-white px-4 py-2 rounded w-full"
-      >
-        {isEdit ? "Update" : "Save"} Category
+        {imagePreview && (
+          <img
+            src={imagePreview}
+            alt="preview"
+            className="w-20 h-20 object-cover rounded"
+          />
+        )}
+      </div>
+
+      <button className="bg-secondary text-white px-4 py-2 rounded w-full">
+        {isEdit ? "Update" : "Create"} Category
       </button>
     </form>
   );
 };
 
-export default BlogForm;
+export default CategoryForm;

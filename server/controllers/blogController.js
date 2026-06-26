@@ -5,7 +5,7 @@ const createBlog = async (req, res) => {
   try {
     const {
       title,
-      blogCategory,
+      catName,
       shortDesc,
       description,
       author,
@@ -28,14 +28,14 @@ const createBlog = async (req, res) => {
     if (!travelInfo) {
       return res.json(400).json({ message: "Travel Info not found" });
     }
-    if (travelInfo) {
+    if (typeof travelInfo === "string") {
       parsedTravelInfo = JSON.parse(travelInfo);
     }
 
     const result = await uploadToCloudinary(req.file.buffer);
     const blog = await Blog.create({
       title,
-      blogCategory,
+      catName,
       shortDesc,
       description,
       author,
@@ -57,7 +57,7 @@ const editBlog = async (req, res) => {
   try {
     const {
       title,
-      blogCategory,
+      catName,
       shortDesc,
       description,
       author,
@@ -69,9 +69,9 @@ const editBlog = async (req, res) => {
     const { id } = req.params;
     const blog = await Blog.findById(id);
 
-    if (!req.file) {
-      return res.status(400).json({ message: "Image required" });
-    }
+    // if (!req.file) {
+    //   return res.status(400).json({ message: "Image required" });
+    // }
 
     let newImage = blog.image;
     if (req.file) {
@@ -87,12 +87,12 @@ const editBlog = async (req, res) => {
     }
 
     blog.title = title ?? blog.title;
-    blog.blogCategory = blogCategory ?? blog.blogCategory;
+    blog.catName = catName ?? blog.catName;
     blog.shortDesc = shortDesc ?? blog.shortDesc;
     blog.description = description ?? blog.description;
     blog.readTime = readTime ?? blog.readTime;
     blog.author = author ?? blog.author;
-    blog.image = newImage ?? null;
+    blog.image = newImage;
     blog.places = Array.isArray(places)
       ? places.join(",")
       : (places ?? blog.places);

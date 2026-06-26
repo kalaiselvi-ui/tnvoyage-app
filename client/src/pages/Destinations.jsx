@@ -3,21 +3,28 @@ import PageHero from "../components/PageHero";
 import CategoryPill from "../components/CategoryPill";
 import DestinationCard from "../components/DestinationCard";
 import { assets } from "../assets/assets";
-import { destinations } from "../data/destinations";
+// import { destinations } from "../data/destinations";
 import { categories } from "../data/categories";
+import { useDestination } from "../context/DestinationContext.jsx";
+import { useEffect } from "react";
 
 const Destinations = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { destinations, getAllDestination } = useDestination();
 
   // 1. Read category from URL
   const urlCategory = searchParams.get("category") || "All";
+
+  useEffect(() => {
+    getAllDestination();
+  }, []);
 
   // 2. Filter destinations based on URL
   const filteredDestinations =
     urlCategory === "All"
       ? destinations
-      : destinations.filter((item) => item.category === urlCategory);
-
+      : destinations?.filter((item) => item?.category?.name === urlCategory);
+  console.log({ filteredDestinations });
   // 3. Handle category click (update URL)
   const handleCategoryChange = (category) => {
     if (category === "All") {
@@ -60,13 +67,12 @@ const Destinations = () => {
         {/* DESTINATION GRID */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredDestinations.length > 0 ? (
-            filteredDestinations.map((place) => (
+            filteredDestinations?.map((place) => (
               <DestinationCard
-                key={place.id}
-                place={place}
+                key={place._id}
                 image={place.image}
                 name={place.name}
-                category={place.category}
+                category={place?.category.name}
                 shortDesc={place.shortDescription}
                 slug={place.slug}
                 location={place.location}

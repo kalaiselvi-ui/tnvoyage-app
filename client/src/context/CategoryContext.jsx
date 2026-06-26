@@ -32,7 +32,7 @@ export const CategoryProvider = ({ children }) => {
   //CREATE category
   const addCategory = async (formData) => {
     try {
-      const res = await API.post("/create", formData, {
+      const res = await API.post("/category/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -48,18 +48,18 @@ export const CategoryProvider = ({ children }) => {
     }
   };
   //UPDATE category
-  const updateCategory = async (id, formData) => {
+  const editCategory = async (id, formData) => {
     try {
-      const res = await API.put(`/edit/${id}`, formData, {
+      const res = await API.put(`/category/edit/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       dispatch({
         type: "UPDATE_CATEGORY",
-        payload: res.data.data,
+        payload: res.data.category,
       });
-      return res.data;
+      return res.data.category;
     } catch (err) {
       console.log(err);
       throw err;
@@ -68,9 +68,9 @@ export const CategoryProvider = ({ children }) => {
   //DELETE Category
   const deleteCategory = async (id) => {
     try {
-      const res = await API.delete(`/delete/${id}`);
+      const res = await API.delete(`/category/delete/${id}`);
       dispatch({
-        type: "DELETE CATEGORY",
+        type: "DELETE_CATEGORY",
         payload: id,
       });
     } catch (err) {
@@ -86,7 +86,7 @@ export const CategoryProvider = ({ children }) => {
         error: state.error,
         getCategories,
         addCategory,
-        updateCategory,
+        editCategory,
         deleteCategory,
       }}
     >

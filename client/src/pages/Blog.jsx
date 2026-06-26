@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Hero from "../components/Hero";
 import { assets } from "../assets/assets";
 import PageHero from "../components/PageHero";
 // import { blogs } from "../data/blogs";
-import { blogCategories } from "../data/blogCategories";
+// import { blogCategories } from "../data/blogCategories";
 import BlogCard from "../components/BlogCard";
 import CategoryPill from "../components/CategoryPill";
 import { useSearchParams } from "react-router-dom";
@@ -13,12 +13,17 @@ import { useBlog } from "../context/BlogContext.jsx";
 const Blog = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const urlCategory = searchParams.get("blogCategory") || "All";
-  const { blogs, getAllBlogs, loading: blogLoading } = useBlog();
+  const { blogs, getBlogs, loading: blogLoading } = useBlog();
+
+  useEffect(() => {
+    getBlogs();
+  }, []);
+  console.log({ blogs });
 
   const filterBlogList = (
     urlCategory === "All"
       ? blogs
-      : blogs.filter((b) => b.category === urlCategory)
+      : blogs.filter((b) => b.catName === urlCategory)
   ).slice(0, 8);
 
   const latestArticleList = [...blogs]
@@ -48,12 +53,12 @@ const Blog = () => {
             active={urlCategory === "All"}
             pillText={"All"}
           />
-          {blogCategories.map((item) => (
+          {[...new Set(blogs.map((blog) => blog.catName))].map((category) => (
             <CategoryPill
-              onClick={() => handleBlogCategory(item.name)}
-              active={urlCategory === item.name}
-              key={item.id}
-              pillText={item.name}
+              onClick={() => handleBlogCategory(category)}
+              active={urlCategory === category}
+              key={category}
+              pillText={category}
             />
           ))}
         </div>
@@ -61,14 +66,14 @@ const Blog = () => {
       {/*Blog Cards */}
       <section className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filterBlogList.length > 0 ? (
-            filterBlogList.map((blog) => (
+          {filterBlogList?.length > 0 ? (
+            filterBlogList?.map((blog) => (
               <BlogCard
-                key={blog.id}
+                key={blog._id}
                 image={blog.image}
                 title={blog.title}
-                excerpt={blog.excerpt}
-                category={blog.category}
+                excerpt={blog.shortDesc}
+                category={blog.catName}
                 readTime={blog.readTime}
                 slug={blog.slug}
               />
@@ -96,17 +101,27 @@ const Blog = () => {
         <h2 className="text-3xl font-bold mb-8">Latest Articles</h2>
 
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {latestArticleList.map((blog) => (
-            <BlogCard
-              key={blog.id}
-              image={blog.image}
-              title={blog.title}
-              excerpt={blog.excerpt}
-              category={blog.category}
-              date={blog.date}
-              slug={blog.slug}
-            />
-          ))}
+          {latestArticleList.map((blog) => {
+            const dateFormat = new Date(blog.createdAt).toLocaleDateString(
+              "en-GB",
+              {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              },
+            );
+            return (
+              <BlogCard
+                key={blog._id}
+                image={blog.image}
+                title={blog.title}
+                excerpt={blog.shortDesc}
+                category={blog.catName}
+                date={dateFormat}
+                slug={blog.slug}
+              />
+            );
+          })}
         </div>
       </section>
     </div>

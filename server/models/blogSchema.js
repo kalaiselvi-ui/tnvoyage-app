@@ -12,9 +12,10 @@ const blogSchema = new mongoose.Schema(
       unique: true,
     },
 
-    blogCategory: {
-      type: mongoose.Schema.Types.ObjectId,
+    catName: {
+      type: String,
       enum: ["Travel Guide", "Food", "Adventure", "Budget Tips", "Hidden Gem"],
+      required: true,
     },
 
     image: String,

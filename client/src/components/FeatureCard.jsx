@@ -13,7 +13,7 @@ const FeatureCard = ({ cardImg, cardTitle, cardText, altImg, slug }) => {
         decoding="async"
       />
       <div className="flex flex-col gap-3 p-5 bg-white/5 shadow-md">
-        <h3 className="text-lg text-black font-semibold">
+        <h3 className="text-lg text-black font-semibold line-clamp-1">
           Destination:{" "}
           <span className="text-green text-bold text-xl italic">
             {cardTitle}

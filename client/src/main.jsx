@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
-import { CategoryProvider } from "./context/categoryContext.jsx";
+import { CategoryProvider } from "./context/CategoryContext.jsx";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
 import { DestinationProvider } from "./context/DestinationContext.jsx";
 import { BlogProvider } from "./context/BlogContext.jsx";

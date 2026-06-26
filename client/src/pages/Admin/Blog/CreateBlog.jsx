@@ -1,35 +1,35 @@
 import BlogForm from "../../../components/BlogForm";
 import { useNavigate } from "react-router-dom";
+import { useBlog } from "../../../context/BlogContext.jsx";
+import { toast } from "react-toastify";
 
 const CreateBlog = () => {
   const navigate = useNavigate();
+  const { addBlog } = useBlog();
 
-  const handleSubmit = (data) => {
-    // 1. Grab existing blogs
-    const existingBlogs = JSON.parse(
-      localStorage.getItem("mock_blogs") || "[]",
-    );
+  const handleSubmit = async (data) => {
+    try {
+      const formdata = new FormData();
+      formdata.append("title", data.title);
+      formdata.append("description", data.description);
+      formdata.append("catName", data.catName);
+      formdata.append("readTime", data.readTime);
+      formdata.append("shortDesc", data.shortDesc);
+      formdata.append("places", data.places);
+      formdata.append("travelInfo", JSON.stringify(data.travelInfo));
 
-    // 2. Format new blog item (converting file object metadata slightly for mock storage)
-    const newBlog = {
-      id: Date.now(),
-      title: data.title,
-      description: data.description,
-      categoryId: data.categoryId,
-      readTime: data.readTime,
-      slug: data.slug,
-      date: new Date().toLocaleDateString(),
-      image: data.image ? URL.createObjectURL(data.image) : null,
-    };
-
-    // 3. Save back to localStorage
-    localStorage.setItem(
-      "mock_blogs",
-      JSON.stringify([...existingBlogs, newBlog]),
-    );
-
-    // 4. Redirect
-    navigate("/admin-dashboard/blogs");
+      if (data.image) {
+        formdata.append("image", data.image);
+      }
+      const createdBlog = await addBlog(formdata);
+      if (createdBlog) {
+        toast.success("New Blog Created Successfully");
+        navigate("/admin-dashboard/blogs");
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to create blog");
+      console.log(err);
+    }
   };
 
   return (

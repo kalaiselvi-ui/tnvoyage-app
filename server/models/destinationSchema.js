@@ -19,6 +19,8 @@ const destinationSchema = new mongoose.Schema(
     },
 
     image: String,
+    shortDesc: String,
+    rating: String,
 
     description: String,
 

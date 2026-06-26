@@ -4,30 +4,35 @@ import { useEffect, useState } from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useDestination } from "../../../context/DestinationContext.jsx";
+import { toast } from "react-toastify";
 
 const AdminDestination = () => {
   const navigate = useNavigate();
-  const {
-    destinations,
-    getAllDestination,
-    loading: destinationLoading,
-    deleteDestination,
-  } = useDestination();
+  const { destinations, getAllDestination, loading, deleteDestination } =
+    useDestination();
   // const [destination, setDestination] = useState(() => {
   //   const saved = localStorage.getItem("mock_destination");
   //   return saved ? JSON.parse(saved) : [];
   // });
-  console.log(destinations);
 
   useEffect(() => {
     getAllDestination();
   }, []);
 
-  // const handleDeleteBlog = (id) => {
-  //   const updatedDestination = destination.filter((dest) => dest.id !== id);
-  //   setDestination(updatedDestination);
-  //   localStorage.setItem("mock_detination", JSON.stringify(updatedDestination));
-  // };
+  const handleDeleteBlog = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this destination?",
+    );
+    if (!confirmed) return;
+    try {
+      await deleteDestination(id);
+      toast.success("Destination deleted successfully");
+    } catch (err) {
+      toast.error(
+        err.response?.data?.message || "Failed to delete destination",
+      );
+    }
+  };
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
@@ -74,7 +79,7 @@ const AdminDestination = () => {
                 <td className="p-4">{dest.category.name}</td>
                 <td className="p-4">
                   <button
-                    onClick={() => navigate(`edit-destination/${dest.id}`)}
+                    onClick={() => navigate(`edit-destination/${dest._id}`)}
                     className="text-blue-500 mr-3"
                     aria-label="edit-icon"
                   >
@@ -84,7 +89,7 @@ const AdminDestination = () => {
                   <button
                     className="text-red-500"
                     aria-label="delete-icon"
-                    onClick={() => deleteDestination(dest._id)}
+                    onClick={() => handleDeleteBlog(dest._id)}
                   >
                     <MdDelete size={20} />
                   </button>

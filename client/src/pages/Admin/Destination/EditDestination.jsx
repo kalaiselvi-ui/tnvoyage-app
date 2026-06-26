@@ -1,39 +1,48 @@
 import React from "react";
 import DestinationForm from "../../../components/DestinationForm";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDestination } from "../../../context/DestinationContext.jsx";
 
 const EditDestination = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const destination = JSON.parse(
-    localStorage.getItem("mock_destination") || "[]",
-  );
+  const { editDestination, destinations } = useDestination();
+  // const destination = JSON.parse(
+  //   localStorage.getItem("mock_destination") || "[]",
+  // );
 
-  const currentDestination = destination.find(
-    (d) => String(d.id) === String(id),
+  const currentDestination = destinations.find(
+    (d) => String(d._id) === String(id),
   );
+  console.log({ currentDestination });
   if (!currentDestination) return;
 
-  const handleSubmit = (data) => {
-    const updatedDestination = destination.map((destination) => {
-      if (destination.id === currentDestination.id) {
-        return {
-          ...destination,
-          ...data,
-          image:
-            data.image instanceof File
-              ? URL.createObjectURL(data.image)
-              : blog.image,
-        };
+  const handleSubmit = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("slug", data.slug);
+      formData.append("category", data.category);
+      formData.append("location", data.location);
+      formData.append("description", data.description);
+      formData.append("shortDesc", String(data.shortDesc || ""));
+      formData.append("bestTime", data.bestTime);
+      formData.append("rating", String(data.rating || ""));
+      formData.append("budget", data.budget);
+      if (data.image instanceof File) {
+        formData.append("image", data.image);
       }
-      return destination;
-    });
-    localStorage.setItem(
-      "mock_destination",
-      JSON.stringify(updatedDestination),
-    );
-    // 4. Redirect
-    navigate("/admin-dashboard/destinations");
+      const updatedDest = await editDestination(id, formData);
+      if (updatedDest) {
+        toast.success("Destination Edited Successfully");
+        navigate("/admin-dashboard/destinations");
+      }
+    } catch (err) {
+      toast.error(
+        err.response?.data?.message || "Failed to create destination",
+      );
+    }
   };
 
   return (

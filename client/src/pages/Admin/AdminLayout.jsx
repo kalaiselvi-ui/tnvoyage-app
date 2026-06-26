@@ -4,19 +4,16 @@ import { useState } from "react";
 import { NavLink, Link, Outlet } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 const AdminLayout = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
-  let name = "Saravana";
+  const { user, logoutUser } = useAuth();
   const navClass = ({ isActive }) =>
     `px-4 py-3 rounded-lg ${
       isActive ? "bg-secondary text-white" : "text-gray-700 hover:bg-gray-100"
     }`;
-
-  const handleLogout = () => {
-    console.log("logout");
-  };
 
   return (
     <div className="min-h-screen flex">
@@ -82,7 +79,7 @@ const AdminLayout = () => {
 
           <p className="hidden md:block">
             Welcome
-            <span className="pl-2 text-green">{name}! 🎉</span>
+            <span className="pl-2 text-green">{user.name}! 🎉</span>
           </p>
 
           <div className="relative">
@@ -97,11 +94,11 @@ const AdminLayout = () => {
             {showMenu && (
               <div className="absolute right-0 top-12 w-44 bg-white rounded-lg shadow-lg border">
                 <div className="p-3 border-b">
-                  <p className="font-medium text-sm">admin@tnvoyage.com</p>
+                  <p className="font-medium text-sm">{user?.email}</p>
                 </div>
 
                 <button
-                  onClick={handleLogout}
+                  onClick={() => logoutUser()}
                   className="w-full text-left p-3 text-red-500 hover:bg-gray-100"
                 >
                   Logout

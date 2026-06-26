@@ -57,6 +57,7 @@ export const DestinationProvider = ({ children }) => {
         type: "EDIT_DESTINATION",
         payload: res.data.data,
       });
+      return res.data.data;
     } catch (err) {
       console.log(err);
       throw err;
@@ -81,7 +82,6 @@ export const DestinationProvider = ({ children }) => {
         loading: state.loading,
         error: state.error,
         getAllDestination,
-
         editDestination,
         addDestination,
         deleteDestination,

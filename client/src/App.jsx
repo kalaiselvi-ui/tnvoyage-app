@@ -20,47 +20,58 @@ import EditDestination from "./pages/Admin/Destination/EditDestination";
 import CreateDestination from "./pages/Admin/Destination/CreateDestination";
 import EditCategory from "./pages/Admin/Category/EditCategory";
 import ProtectedRoutes from "./routes/ProtectedRoutes.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/blogs" element={<Blog />} />
-        <Route path="/blogs/:slug" element={<BlogDetails />} />
-        <Route path="/destinations" element={<Destinations />} />
-        <Route path="/destinations/:slug" element={<DestinationDetails />} />
-        <Route path="/contact" element={<Contact />} />
-      </Route>
-      {/* Admin Routes */}
-      <Route
-        path="/admin-dashboard"
-        element={
-          <ProtectedRoutes>
-            <AdminLayout />
-          </ProtectedRoutes>
-        }
-      >
-        <Route index element={<AdminDashboard />} />
-        <Route path="blogs" element={<AdminBlogs />} />
-        <Route path="blogs/create-blog" element={<CreateBlog />} />
-        <Route path="blogs/edit-blog/:id" element={<EditBlog />} />
-        <Route path="categories" element={<AdminCategory />} />
-        <Route path="categories/create-category" element={<CreateCategory />} />
-        <Route path="categories/edit-category/:id" element={<EditCategory />} />
+    <>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/blogs" element={<Blog />} />
+          <Route path="/blogs/:slug" element={<BlogDetails />} />
+          <Route path="/destinations" element={<Destinations />} />
+          <Route path="/destinations/:slug" element={<DestinationDetails />} />
+          <Route path="/contact" element={<Contact />} />
+        </Route>
+        {/* Admin Routes */}
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoutes>
+              <AdminLayout />
+            </ProtectedRoutes>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="blogs" element={<AdminBlogs />} />
+          <Route path="blogs/create-blog" element={<CreateBlog />} />
+          <Route path="blogs/edit-blog/:id" element={<EditBlog />} />
+          <Route path="categories" element={<AdminCategory />} />
+          <Route
+            path="categories/create-category"
+            element={<CreateCategory />}
+          />
+          <Route
+            path="categories/edit-category/:id"
+            element={<EditCategory />}
+          />
 
-        <Route path="destinations" element={<AdminDestination />} />
-        <Route
-          path="destinations/create-destination"
-          element={<CreateDestination />}
-        />
-        <Route
-          path="destinations/edit-destination/:id"
-          element={<EditDestination />}
-        />
-      </Route>
-    </Routes>
+          <Route path="destinations" element={<AdminDestination />} />
+          <Route
+            path="destinations/create-destination"
+            element={<CreateDestination />}
+          />
+          <Route
+            path="destinations/edit-destination/:id"
+            element={<EditDestination />}
+          />
+        </Route>
+      </Routes>
+      <ToastContainer position="top-right" autoClose={2000} newestOnTop />
+    </>
   );
 };
 

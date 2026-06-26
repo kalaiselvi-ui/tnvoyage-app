@@ -5,8 +5,17 @@ import { uploadToCloudinary } from "../utils/upload.js";
 
 const createDestination = async (req, res) => {
   try {
-    const { name, description, places, budget, bestTime, category, location } =
-      req.body;
+    const {
+      name,
+      description,
+      places,
+      budget,
+      bestTime,
+      category,
+      location,
+      shortDesc,
+      rating,
+    } = req.body;
 
     if (!name || !description) {
       return res
@@ -24,7 +33,9 @@ const createDestination = async (req, res) => {
       budget,
       places: Array.isArray(places) ? places.join(",") : places,
       bestTime,
-      category,
+      shortDesc,
+      category: category,
+      rating,
       location,
       image: result.secure_url,
     });
@@ -57,8 +68,17 @@ const getAllDestination = async (req, res) => {
 
 const editDestination = async (req, res) => {
   try {
-    const { name, description, places, budget, bestTime, category, location } =
-      req.body;
+    const {
+      name,
+      description,
+      places,
+      budget,
+      bestTime,
+      category,
+      rating,
+      location,
+      shortDesc,
+    } = req.body;
     const { id } = req.params;
     const destination = await Destination.findById(id);
     if (!destination)
@@ -88,8 +108,10 @@ const editDestination = async (req, res) => {
       : (places ?? destination.places);
     destination.budget = budget ?? destination.budget;
     destination.bestTime = bestTime ?? destination.bestTime;
+    destination.shortDesc = shortDesc ?? destination.shortDesc;
+    destination.rating = rating ?? destination.rating;
     destination.location = location ?? destination.location;
-    destination.image = newImage ?? null;
+    destination.image = newImage;
     destination.category = category ?? destination.category;
 
     await destination.save();

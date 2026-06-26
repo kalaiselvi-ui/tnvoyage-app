@@ -1,178 +1,208 @@
-// components/DestinationForm.jsx
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useCategory } from "../context/CategoryContext.jsx";
 
 const DestinationForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
+  const { categories, getCategories } = useCategory();
+
+  const [imagePreview, setImagePreview] = useState(null);
+
+  // normalize category safely
+  const normalizeCategory = (cat) => {
+    if (!cat) return "";
+    if (typeof cat === "string") return cat;
+    return cat._id || "";
+  };
+
   const [form, setForm] = useState({
-    name: initialData.name || "",
-    slug: initialData.slug || "",
-    category: initialData.category || "",
-    location: initialData.location || "",
-    rating: initialData.rating || "",
-    shortDescription: initialData.shortDescription || "",
-    description: initialData.description || "",
-    bestTime: initialData.bestTime || "",
-    budget: initialData.budget || "",
-    places: Array.isArray(initialData.places)
-      ? initialData.places.join(", ")
-      : initialData.places || "",
+    name: "",
+    slug: "",
+    category: "",
+    location: "",
+    rating: "",
+    shortDesc: "",
+    description: "",
+    bestTime: "",
+    budget: "",
+    places: "",
     image: "",
   });
 
-  const categoryOptions = [
-    "Hill Stations",
-    "Waterfalls",
-    "Temples",
-    "Beaches",
-    "Nature",
-    "Food Trails",
-  ];
+  // load categories
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  // sync edit data safely
+  useEffect(() => {
+    if (!initialData) return;
+
+    setForm({
+      name: initialData.name || "",
+      slug: initialData.slug || "",
+      category: normalizeCategory(initialData.category),
+      location: initialData.location || "",
+      rating: initialData.rating || "",
+      shortDesc: initialData.shortDesc || "",
+      description: initialData.description || "",
+      bestTime: initialData.bestTime || "",
+      budget: initialData.budget || "",
+      places: Array.isArray(initialData.places)
+        ? initialData.places.join(", ")
+        : initialData.places || "",
+      image: "",
+    });
+
+    if (initialData.image) {
+      setImagePreview(initialData.image);
+    }
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setForm((prev) => {
-      const updated = {
-        ...prev,
-        [name]: value,
-      };
-
-      // auto slug only when name changes
-      if (name === "name") {
-        updated.slug = value
-          .toLowerCase()
-          .trim()
-          .replace(/\s+/g, "-")
-          .replace(/[^\w-]/g, "");
-      }
-
-      return updated;
-    });
+    setForm((prev) => ({
+      ...prev,
+      [name]: value, // ALWAYS string (important)
+    }));
   };
 
   const handleImage = (e) => {
-    setForm({
-      ...form,
-      image: e.target.files[0],
-    });
+    const file = e.target.files[0];
+
+    setForm((prev) => ({
+      ...prev,
+      image: file,
+    }));
+
+    setImagePreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // FINAL SAFE DATA
     const destinationData = {
       ...form,
-      places: form.places.split(",").map((place) => place.trim()),
+      category: String(form.category), // 🔥 FORCE STRING ID
+      places: form.places ? form.places.split(",").map((p) => p.trim()) : [],
     };
+
+    console.log("FINAL SUBMIT DATA:", destinationData);
 
     onSubmit(destinationData);
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-xl shadow space-y-4"
-    >
+    <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-xl">
+      {/* NAME */}
       <input
-        type="text"
         name="name"
-        placeholder="Destination Name"
         value={form.name}
         onChange={handleChange}
+        placeholder="Destination Name"
         className="w-full border p-2 rounded"
       />
 
+      {/* SLUG */}
       <input
-        type="text"
         name="slug"
-        readOnly
         value={form.slug}
+        readOnly
         className="w-full border p-2 rounded"
       />
 
+      {/* CATEGORY */}
       <select
         name="category"
-        value={form.category}
+        value={form.category} // 🔥 MUST BE ID ONLY
         onChange={handleChange}
         className="w-full border p-2 rounded"
       >
         <option value="">Select Category</option>
-
-        {categoryOptions.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
+        {categories.map((cat) => (
+          <option key={cat._id} value={cat._id}>
+            {cat.name}
           </option>
         ))}
       </select>
+
+      {/* LOCATION */}
       <input
-        type="text"
         name="location"
-        placeholder="Location"
         value={form.location}
         onChange={handleChange}
+        placeholder="Location"
         className="w-full border p-2 rounded"
       />
 
+      {/* RATING */}
       <input
-        type="number"
-        step="0.1"
         name="rating"
-        placeholder="Rating"
         value={form.rating}
         onChange={handleChange}
+        placeholder="Rating"
         className="w-full border p-2 rounded"
       />
 
+      {/* SHORT DESC */}
       <textarea
-        name="shortDescription"
-        placeholder="Short Description"
-        value={form.shortDescription}
+        name="shortDesc"
+        value={form.shortDesc}
         onChange={handleChange}
+        placeholder="Short Description"
         className="w-full border p-2 rounded"
       />
 
+      {/* DESCRIPTION */}
       <textarea
         name="description"
-        placeholder="Full Description"
         value={form.description}
         onChange={handleChange}
+        placeholder="Full Description"
         className="w-full border p-2 rounded"
       />
 
+      {/* BEST TIME */}
       <input
-        type="text"
         name="bestTime"
-        placeholder="Best Time"
         value={form.bestTime}
         onChange={handleChange}
+        placeholder="Best Time"
         className="w-full border p-2 rounded"
       />
 
+      {/* BUDGET */}
       <input
-        type="text"
         name="budget"
-        placeholder="Budget"
         value={form.budget}
         onChange={handleChange}
+        placeholder="Budget"
         className="w-full border p-2 rounded"
       />
 
+      {/* PLACES */}
       <input
-        type="text"
         name="places"
-        placeholder="Places (comma separated)"
         value={form.places}
         onChange={handleChange}
+        placeholder="Places (comma separated)"
         className="w-full border p-2 rounded"
       />
 
-      <input type="file" accept="image/*" onChange={handleImage} />
+      {/* IMAGE */}
+      <input type="file" onChange={handleImage} />
 
-      <button
-        type="submit"
-        className="bg-secondary w-full text-white px-4 py-2 rounded"
-      >
-        {isEdit ? "Update" : "Save"} Destination
+      {imagePreview && (
+        <img
+          src={imagePreview}
+          alt="preview"
+          className="w-24 h-24 object-cover rounded"
+        />
+      )}
+
+      {/* SUBMIT */}
+      <button className="bg-secondary text-white w-full py-2 rounded">
+        {isEdit ? "Update" : "Create"} Destination
       </button>
     </form>
   );

@@ -37,7 +37,7 @@ export const BlogProvider = ({ children }) => {
         type: "ADD_BLOG",
         payload: res.data.data,
       });
-      return res.data;
+      return res.data.data;
     } catch (err) {
       console.log(err);
       throw err;

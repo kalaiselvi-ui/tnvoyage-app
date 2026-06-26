@@ -27,11 +27,13 @@ const BlogCard = ({
           {category}
         </span>
 
-        <h3 className="text-xl font-semibold text-gray-900 line-clamp-2 min-h-10">
+        <h3 className="text-xl font-semibold text-gray-900 mb-3 overflow-hidden line-clamp-1">
           {title}
         </h3>
 
-        <p className="text-gray-600 line-clamp-3 min-h-[72px]">{excerpt}</p>
+        <p className="text-gray-600 line-clamp-2 overflow-hidden mb-2">
+          {excerpt}
+        </p>
 
         <div className="flex items-center justify-between mt-auto">
           {readTime && (

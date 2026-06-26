@@ -10,7 +10,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import TrendingCard from "../components/TrendingCard";
 import API from "../api/axiosInstance.js";
-import { useCategory } from "../context/categoryContext.jsx";
+import { useCategory } from "../context/CategoryContext.jsx";
 import SkeletonCard from "../components/SkeletonCard.jsx";
 import { useDestination } from "../context/DestinationContext.jsx";
 
@@ -26,6 +26,7 @@ const Home = () => {
     getCategories();
     getAllDestination();
   }, []);
+  console.log({ destinations });
 
   const countMap = categories.reduce((acc, cat) => {
     acc[cat.name] = (acc[cat.name] || 0) + 1;
@@ -42,8 +43,8 @@ const Home = () => {
           hidden gems across South India."
         buttonText="Start Exploring"
       />
-      <section className="max-w-7xl lg:mx-auto py-5 mx-3 md:mx-8">
-        <h2 className="text-center text-3xl font-bold mb-5 text-secondary">
+      <section className="max-w-7xl lg:mx-auto py-10 mx-3 md:mx-8">
+        <h2 className="text-center text-3xl font-bold mb-10 text-secondary">
           Featured Categories
         </h2>
         <div className="flex flex-wrap justify-center gap-4 px-8">
@@ -82,7 +83,7 @@ const Home = () => {
         </div>
       </section>
       <section className="max-w-7xl lg:mx-auto py-10 mx-3 md:mx-8">
-        <h2 className="text-center text-3xl font-bold mb-5 text-secondary">
+        <h2 className="text-center text-3xl font-bold mb-10 text-secondary">
           Featured Destinations
         </h2>
         <div className="flex flex-wrap justify-center gap-4 px-8">
@@ -97,14 +98,14 @@ const Home = () => {
               })
             : destinations.map((destination) => (
                 <div
-                  key={destination.id}
+                  key={destination._id}
                   className="w-full md:w-[calc(25%-1rem)] max-w-sm"
                 >
                   <FeatureCard
                     cardImg={destination.image}
                     altImg={destination.name}
                     cardTitle={destination.name}
-                    cardText={destination.description}
+                    cardText={destination.shortDesc}
                     slug={destination.slug}
                   />
                 </div>

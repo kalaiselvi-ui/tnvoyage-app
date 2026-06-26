@@ -1,21 +1,32 @@
 // pages/admin/Blogs.jsx
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { useBlog } from "../../../context/BlogContext.jsx";
+import { toast } from "react-toastify";
 
 const AdminBlogs = () => {
   const navigate = useNavigate();
-  const [blogs, setBlogs] = useState(() => {
-    const saved = localStorage.getItem("mock_blogs");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const { blogs, loading, getBlogs, deleteBlog } = useBlog();
 
-  const handleDeleteBlog = (id) => {
-    const updatedBlogs = blogs.filter((blog) => blog.id !== id);
-    setBlogs(updatedBlogs);
-    localStorage.setItem("mock_blogs", JSON.stringify(updatedBlogs));
+  useEffect(() => {
+    getBlogs();
+    console.log({ blogs });
+  }, []);
+
+  const handleDeleteBlog = async (id) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this destination?",
+    );
+    if (!confirm) return;
+    try {
+      await deleteBlog(id);
+      toast.success("Blog deleted successfully");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to delete blog");
+    }
   };
 
   return (
@@ -52,12 +63,12 @@ const AdminBlogs = () => {
 
             <tbody>
               {blogs.map((blog) => (
-                <tr className="border-b" key={blog.id}>
+                <tr className="border-b" key={blog._id}>
                   <td className="p-4">
-                    {blog.image ? (
+                    {blog?.image ? (
                       <img
-                        src={blog.image}
-                        alt={blog.title}
+                        src={blog?.image}
+                        alt={blog?.title}
                         className="w-16 h-10 object-cover rounded-lg border border-gray-200"
                       />
                     ) : (
@@ -66,15 +77,21 @@ const AdminBlogs = () => {
                       </div>
                     )}
                   </td>
-                  <td className="p-4">{blog.title}</td>
-                  <td className="p-4">{blog.categoryId}</td>
-                  <td className="hidden md:table-cell p-4">{blog.date}</td>
+                  <td className="p-4">{blog?.title}</td>
+                  <td className="p-4">{blog?.catName}</td>
+                  <td className="hidden md:table-cell p-4 text-sm text-gray-500">
+                    {new Date(blog?.createdAt).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </td>
 
-                  <td className="hidden lg:table-cell p-4">{blog.readTime}</td>
+                  <td className="hidden lg:table-cell p-4">{blog?.readTime}</td>
 
                   <td className="p-4">
                     <button
-                      onClick={() => navigate(`edit-blog/${blog.id}`)}
+                      onClick={() => navigate(`edit-blog/${blog?._id}`)}
                       className="text-blue-500 mr-3"
                       aria-label="edit-icon"
                     >
@@ -84,7 +101,7 @@ const AdminBlogs = () => {
                     <button
                       className="text-red-500"
                       aria-label="delete-icon"
-                      onClick={() => handleDeleteBlog(blog.id)}
+                      onClick={() => handleDeleteBlog(blog?._id)}
                     >
                       <MdDelete size={20} />
                     </button>
