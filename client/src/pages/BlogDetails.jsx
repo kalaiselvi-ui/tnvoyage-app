@@ -9,7 +9,6 @@ import { useBlog } from "../context/BlogContext.jsx";
 
 const BlogDetails = () => {
   const { slug } = useParams();
-  console.log({ slug });
   const { blogs, getBlogs, loading: blogLoading } = useBlog();
 
   useEffect(() => {

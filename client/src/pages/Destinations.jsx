@@ -24,7 +24,6 @@ const Destinations = () => {
     urlCategory === "All"
       ? destinations
       : destinations?.filter((item) => item?.category?.name === urlCategory);
-  console.log({ filteredDestinations });
   // 3. Handle category click (update URL)
   const handleCategoryChange = (category) => {
     if (category === "All") {

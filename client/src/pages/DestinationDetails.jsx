@@ -17,7 +17,6 @@ const DestinationDetails = () => {
   }, []);
 
   const place = destinations.find((d) => d.slug === slug);
-  console.log({ place });
 
   if (!place) {
     return (

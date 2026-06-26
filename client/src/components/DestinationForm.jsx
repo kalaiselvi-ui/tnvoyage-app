@@ -87,8 +87,6 @@ const DestinationForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
       places: form.places ? form.places.split(",").map((p) => p.trim()) : [],
     };
 
-    console.log("FINAL SUBMIT DATA:", destinationData);
-
     onSubmit(destinationData);
   };
 

@@ -18,7 +18,6 @@ const Blog = () => {
   useEffect(() => {
     getBlogs();
   }, []);
-  console.log({ blogs });
 
   const filterBlogList = (
     urlCategory === "All"

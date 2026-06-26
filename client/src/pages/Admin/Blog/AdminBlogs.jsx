@@ -13,7 +13,6 @@ const AdminBlogs = () => {
 
   useEffect(() => {
     getBlogs();
-    console.log({ blogs });
   }, []);
 
   const handleDeleteBlog = async (id) => {

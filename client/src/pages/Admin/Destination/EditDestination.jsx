@@ -15,7 +15,6 @@ const EditDestination = () => {
   const currentDestination = destinations.find(
     (d) => String(d._id) === String(id),
   );
-  console.log({ currentDestination });
   if (!currentDestination) return;
 
   const handleSubmit = async (data) => {

@@ -31,8 +31,6 @@ const BlogForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
         [name]: value,
       };
 
-      // console.log({ updated });
-
       // auto slug only when name changes
       if (name === "title") {
         updated.slug = value
@@ -71,7 +69,6 @@ const BlogForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
       ...form,
       places: form.places.split(",").map((place) => place.trim()),
     };
-    console.log({ blogData });
     // This passes the data up to <CreateBlog />
     onSubmit(blogData);
 

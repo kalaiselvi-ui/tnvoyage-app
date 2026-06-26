@@ -51,7 +51,6 @@ const AuthModal = ({ open, setOpen }) => {
           password: "",
         });
       }
-      console.log(formData);
     } catch (err) {
       console.log(err);
     }

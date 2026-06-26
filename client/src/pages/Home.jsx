@@ -26,7 +26,6 @@ const Home = () => {
     getCategories();
     getAllDestination();
   }, []);
-  console.log({ destinations });
 
   const countMap = categories.reduce((acc, cat) => {
     acc[cat.name] = (acc[cat.name] || 0) + 1;
