@@ -6,6 +6,7 @@ import BlogCard from "../components/BlogCard";
 import CardInfo from "../components/CardInfo";
 import { useBlocker, useParams } from "react-router-dom";
 import { useBlog } from "../context/BlogContext.jsx";
+import { Helmet } from "react-helmet-async";
 
 const BlogDetails = () => {
   const { slug } = useParams();
@@ -33,6 +34,11 @@ const BlogDetails = () => {
 
   return (
     <div className="">
+      <Helmet>
+        <title>{blog.title} | TN Voyage</title>
+
+        <meta name="description" content={blog.description} />
+      </Helmet>
       <PageHero
         heroTitle={blog.title}
         heroSubTitle={`By TNVoyage Team • ${blog.readTime} read`}

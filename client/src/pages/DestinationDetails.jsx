@@ -7,6 +7,7 @@ import DestinationCard from "../components/DestinationCard";
 import CardInfo from "../components/CardInfo";
 import { useDestination } from "../context/DestinationContext.jsx";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const DestinationDetails = () => {
   const { slug } = useParams();
@@ -45,6 +46,11 @@ const DestinationDetails = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>{place.name} | TN Voyage</title>
+
+        <meta name="description" content={place.description} />
+      </Helmet>
       {/* Hero */}
 
       <PageHero

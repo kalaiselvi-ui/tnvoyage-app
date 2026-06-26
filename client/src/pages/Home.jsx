@@ -13,7 +13,7 @@ import API from "../api/axiosInstance.js";
 import { useCategory } from "../context/CategoryContext.jsx";
 import SkeletonCard from "../components/SkeletonCard.jsx";
 import { useDestination } from "../context/DestinationContext.jsx";
-
+import { Helmet } from "react-helmet-async";
 const Home = () => {
   const { categories, getCategories, loading: categoryLoading } = useCategory();
   const {
@@ -34,6 +34,9 @@ const Home = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>TN Voyage | Explore Tamil Nadu</title>
+      </Helmet>
       <Hero
         heroPoster={assets.heroPoster}
         heroVideo={assets.hero_video}

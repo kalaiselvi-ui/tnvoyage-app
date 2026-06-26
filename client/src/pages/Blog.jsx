@@ -9,6 +9,7 @@ import CategoryPill from "../components/CategoryPill";
 import { useSearchParams } from "react-router-dom";
 import FeaturedBlog from "../components/FeaturedBlog";
 import { useBlog } from "../context/BlogContext.jsx";
+import { Helmet } from "react-helmet-async";
 
 const Blog = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -39,6 +40,9 @@ const Blog = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>TN Voyage | Travel Blogs</title>
+      </Helmet>
       <PageHero
         HeroImg={assets.heroPoster}
         heroTitle="Travel Guides & Insights"

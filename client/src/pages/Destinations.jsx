@@ -7,6 +7,7 @@ import { assets } from "../assets/assets";
 import { categories } from "../data/categories";
 import { useDestination } from "../context/DestinationContext.jsx";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const Destinations = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,6 +36,9 @@ const Destinations = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>TN Voyage | Travel Destinations</title>
+      </Helmet>
       {/* HERO */}
       <PageHero
         HeroImg={assets.heroPoster}

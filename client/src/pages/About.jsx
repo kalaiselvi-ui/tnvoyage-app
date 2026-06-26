@@ -2,10 +2,19 @@ import React from "react";
 import PageHero from "../components/PageHero";
 import { assets } from "../assets/assets";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const About = () => {
   return (
     <div>
+      <Helmet>
+        <title>About Us | TN Voyage</title>
+
+        <meta
+          name="description"
+          content="Learn about TN Voyage and discover our mission to help travelers explore the best destinations across Tamil Nadu."
+        />
+      </Helmet>
       <PageHero
         HeroImg={assets.about_banner}
         heroTitle={"About TNVoyage"}
